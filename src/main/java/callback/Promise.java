@@ -24,6 +24,7 @@ public class Promise {
         promise.thenAccept(u -> System.out.println("Thank you mom for $" + u));
         System.out.println("OK...");
         promise.complete(sum(200));
+        ex.shutdown();
     }
 
     private static int sum(int a) {

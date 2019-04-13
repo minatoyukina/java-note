@@ -13,7 +13,7 @@ import java.sql.PreparedStatement;
 
 public class CardCrawler {
     public static void main(String[] args) throws Exception {
-        for (int i = 1063; i < 1100; i++) {
+        for (int i = 1092; i < 1097; i++) {
             int temp = Integer.parseInt(Math.round(Math.random() * (UserAgent.length - 1)) + "");
             String url = "https://bandori.party/card/" + i;
             Document document = Jsoup.connect(url)
