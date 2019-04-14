@@ -27,6 +27,7 @@ public class ObserverMain {
         feedLambda.notifyObservers(" Money money money,give me money");
     }
 
+    @FunctionalInterface
     interface Observer {
         void inform(String tweet);
     }
