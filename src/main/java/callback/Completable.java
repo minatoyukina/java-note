@@ -5,7 +5,7 @@ import java.util.concurrent.*;
 public class Completable {
     public static void main(String[] args) throws Exception {
         ExecutorService service = Executors.newCachedThreadPool();
-        FutureTask<String> task = new FutureTask<>(new Call());
+        FutureTask<String> task = new FutureTask<>(() -> "hello");
         service.submit(task);
         CompletableFuture<String> future = CompletableFuture.supplyAsync((() -> {
             try {
@@ -16,18 +16,12 @@ public class Completable {
             return "java";
         }), service);
         System.out.println(task.get());
-        future.thenAcceptAsync(System.out::println);
-        future.complete("scala");
+//        future.thenAcceptAsync(System.out::println);
+//        future.complete("scala");
+        future.whenCompleteAsync((s, throwable) -> System.out.println(s));
+        future.thenApply(s->"hello "+s).thenAccept(System.out::println);
         System.out.println("world");
-        service.shutdown();
-    }
-
-}
-
-class Call implements Callable<String> {
-    @Override
-    public String call() {
-        return "hello";
+//        service.shutdown();
     }
 }
 
