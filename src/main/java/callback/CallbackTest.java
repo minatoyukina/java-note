@@ -1,6 +1,10 @@
 package callback;
 
 public class CallbackTest {
+    static {
+        System.out.println("hello");
+        CallbackTest test=new CallbackTest();
+    }
     public void handleThings(Callback callback) {
         new Thread(() -> {
             for (int i = 0; i < 5; i++) {
