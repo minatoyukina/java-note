@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
 public class App {
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
 
-    private static final String DEFAULT_URL = "https://raw.githubusercontent.com/iluwatar/java-design-patterns/Promise/promise/README.md";
+    private static final String DEFAULT_URL = "https://raw.githubusercontent.com/feixiao/DesignPattern/master/Java/promise/README.md";
     private final ExecutorService service;
     private final CountDownLatch stopLatch;
 
@@ -31,10 +31,10 @@ public class App {
 
     private void promiseUsage() {
         calculateLineCount();
-        calculateLowestFrequencyCHar();
+        calculateLowestFrequencyChar();
     }
 
-    private void calculateLowestFrequencyCHar() {
+    private void calculateLowestFrequencyChar() {
         lowestFrequencyChar().thenAccept(character -> {
             LOGGER.info("Char with lowest frequency is: {}", character);
             taskCompleted();
@@ -73,7 +73,7 @@ public class App {
     }
 
     private void stop() throws InterruptedException {
-        stopLatch.wait();
+        stopLatch.await();
         service.shutdownNow();
     }
 

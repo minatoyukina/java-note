@@ -9,10 +9,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class Utility {
-    private static final Logger logger = LoggerFactory.getLogger(Utility.class);
+class Utility {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Utility.class);
 
-    public static Map<Character, Integer> characterFrequency(String fileLocation) {
+    static Map<Character, Integer> characterFrequency(String fileLocation) {
         Map<Character, Integer> characterToFrequency = new HashMap<>();
         try {
             Reader reader = new FileReader(fileLocation);
@@ -32,7 +32,7 @@ public class Utility {
         return characterToFrequency;
     }
 
-    public static Character lowestFrequencyChar(Map<Character, Integer> characterFrequency) {
+    static Character lowestFrequencyChar(Map<Character, Integer> characterFrequency) {
         Character lowestFrequencyChar = null;
         Iterator<Map.Entry<Character, Integer>> iterator = characterFrequency.entrySet().iterator();
         Map.Entry<Character, Integer> entry = iterator.next();
@@ -48,7 +48,7 @@ public class Utility {
         return lowestFrequencyChar;
     }
 
-    public static Integer countLines(String fileLocation) {
+    static Integer countLines(String fileLocation) {
         int lineCount = 0;
         try {
             FileReader reader = new FileReader(fileLocation);
@@ -62,19 +62,24 @@ public class Utility {
         return lineCount;
     }
 
-    public static String downloadFile(String urlString) throws Exception {
-        logger.info("Downloading contents form url: {}", urlString);
+    static String downloadFile(String urlString) throws Exception {
+        LOGGER.info("Downloading contents form url: {}", urlString);
         URL url = new URL(urlString);
         File file = File.createTempFile("promise_pattern", null);
 
         Reader reader = new InputStreamReader(url.openStream());
         BufferedReader bufferedReader = new BufferedReader(reader);
         FileWriter writer = new FileWriter(file);
-        for (String line; (line = bufferedReader.readLine()) != null; ) {
-            writer.write(line);
-            writer.write("\n");
+        try {
+            for (String line; (line = bufferedReader.readLine()) != null; ) {
+                writer.write(line);
+                writer.write("\n");
+            }
+        } finally {
+            reader.close();
+            writer.close();
         }
-        logger.info("File downloaded at: {}", file.getAbsolutePath());
+        LOGGER.info("File downloaded at: {}", file.getAbsolutePath());
         return file.getAbsolutePath();
     }
 }

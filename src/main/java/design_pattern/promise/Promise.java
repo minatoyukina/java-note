@@ -5,11 +5,11 @@ import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class Promise<T> extends PromiseSupport<T> {
+class Promise<T> extends PromiseSupport<T> {
     private Runnable fulfillmentAction;
     private Consumer<? super Throwable> exceptionHandler;
 
-    public Promise() {
+    Promise() {
 
     }
 
@@ -40,7 +40,7 @@ public class Promise<T> extends PromiseSupport<T> {
         exceptionHandler.accept(exception);
     }
 
-    public Promise<T> fulfillInAsync(final Callable<T> task, Executor executor) {
+    Promise<T> fulfillInAsync(final Callable<T> task, Executor executor) {
         executor.execute(() -> {
             try {
                 fulfill(task.call());
@@ -51,20 +51,20 @@ public class Promise<T> extends PromiseSupport<T> {
         return this;
     }
 
-    public Promise<Void> thenAccept(Consumer<? super T> action) {
+    Promise<Void> thenAccept(Consumer<? super T> action) {
         Promise<Void> dest = new Promise<>();
         fulfillmentAction = new ConsumeAction(this, dest, action);
         return dest;
     }
 
-    public Promise<T> onError(Consumer<? super Throwable> exceptionHandler) {
+    Promise<T> onError(Consumer<? super Throwable> exceptionHandler) {
         this.exceptionHandler = exceptionHandler;
         return this;
     }
 
-    public <V> Promise<V> thenApply(Function<? super T, V> func) {
+    <V> Promise<V> thenApply(Function<? super T, V> func) {
         Promise<V> dest = new Promise<>();
-        fulfillmentAction = new TransformAction<V>(this, dest, func);
+        fulfillmentAction = new TransformAction<>(this, dest, func);
         return dest;
     }
 
@@ -105,7 +105,6 @@ public class Promise<T> extends PromiseSupport<T> {
         public void run() {
             try {
                 dest.fulfill(func.apply(src.get()));
-                dest.fulfill(null);
             } catch (Throwable throwable) {
                 dest.fulfillExceptionally((Exception) throwable.getCause());
             }
