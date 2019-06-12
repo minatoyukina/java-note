@@ -1,4 +1,4 @@
-package design_pattern;
+package design_pattern.lambda;
 
 import java.util.function.Function;
 import java.util.function.UnaryOperator;

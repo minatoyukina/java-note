@@ -1,4 +1,4 @@
-package design_pattern;
+package design_pattern.lambda;
 
 public class StrategyMain {
     public static void main(String[] args) {

@@ -3,7 +3,6 @@ package design_pattern.promise;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,7 +16,7 @@ public class App {
 
     private App() {
         service = Executors.newFixedThreadPool(2);
-        stopLatch = new CountDownLatch(2);
+        stopLatch = new CountDownLatch(1);
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -30,46 +29,25 @@ public class App {
     }
 
     private void promiseUsage() {
-        calculateLineCount();
-        calculateLowestFrequencyChar();
-    }
-
-    private void calculateLowestFrequencyChar() {
-        lowestFrequencyChar().thenAccept(character -> {
+        download().thenApply(Utility::characterFrequency).thenApply(Utility::lowestFrequencyChar).thenAccept(character -> {
             LOGGER.info("Char with lowest frequency is: {}", character);
-            taskCompleted();
-        });
-    }
-
-    private void calculateLineCount() {
-        countLines().thenAccept(count -> {
+            stopLatch.countDown();
+        }).thenAccept(s -> System.out.println(Thread.currentThread().getName() + " frequency finished"));
+        download().thenApply(Utility::countLines).thenAccept(count -> {
             LOGGER.info("Line count is: {}", count);
-            taskCompleted();
-        });
+            stopLatch.countDown();
+        }).thenAccept(s -> System.out.println(Thread.currentThread().getName() + " count finished"));
     }
 
-    private Promise<Character> lowestFrequencyChar() {
-        return characterFrequency().thenApply(Utility::lowestFrequencyChar);
-    }
-
-    private Promise<Map<Character, Integer>> characterFrequency() {
-        return download(DEFAULT_URL).thenApply(Utility::characterFrequency);
-    }
-
-    private Promise<Integer> countLines() {
-        return download(DEFAULT_URL).thenApply(Utility::countLines);
-    }
-
-    private Promise<String> download(String urlString) {
+    private Promise<String> download() {
         return new Promise<String>()
                 .fulfillInAsync(
-                        () -> Utility.downloadFile(urlString), service
-                ).onError(
+                        () -> Utility.downloadFile(App.DEFAULT_URL), service)
+                .onError(
                         throwable -> {
                             throwable.printStackTrace();
-                            taskCompleted();
-                        }
-                );
+                            stopLatch.countDown();
+                        });
     }
 
     private void stop() throws InterruptedException {
@@ -77,7 +55,4 @@ public class App {
         service.shutdownNow();
     }
 
-    private void taskCompleted() {
-        stopLatch.countDown();
-    }
 }

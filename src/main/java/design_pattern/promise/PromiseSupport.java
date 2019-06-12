@@ -1,5 +1,6 @@
 package design_pattern.promise;
 
+import javax.annotation.Nonnull;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -70,7 +71,7 @@ public class PromiseSupport<T> implements Future<T> {
     }
 
     @Override
-    public T get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+    public T get(long timeout, @Nonnull TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
         if (state == COMPLETED) {
             return value;
         } else if (state == FAILED) {
