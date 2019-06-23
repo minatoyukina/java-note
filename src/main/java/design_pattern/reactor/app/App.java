@@ -16,7 +16,8 @@ public class App {
     }
 
     public static void main(String[] args) throws IOException {
-        new App(new ThreadPoolDispatcher(2)).start();
+//        new App(new ThreadPoolDispatcher(2)).start();
+        new App(new SameThreadDispatcher()).start();
     }
 
     private void start() throws IOException {

@@ -14,13 +14,12 @@ import java.util.Set;
 
 public class MultiplexerTimeServer implements Runnable {
     private Selector selector;
-    private ServerSocketChannel socketChannel;
     private volatile boolean stop;
 
     MultiplexerTimeServer(int port) {
         try {
             selector = Selector.open();
-            socketChannel = ServerSocketChannel.open();
+            ServerSocketChannel socketChannel = ServerSocketChannel.open();
             socketChannel.configureBlocking(false);
             socketChannel.socket().bind(new InetSocketAddress(port), 1024);
             socketChannel.register(selector, SelectionKey.OP_ACCEPT);
