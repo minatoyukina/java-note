@@ -11,7 +11,7 @@ public class App {
         LetterComposite orcMessage = new Messenger().messageFromOrcs();
         orcMessage.print();
         LOGGER.info("\n");
-        LOGGER.info("Message from the elves");
+        LOGGER.info("Message from the elves: ");
         LetterComposite elfMessage = new Messenger().messageFromElves();
         elfMessage.print();
     }
