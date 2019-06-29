@@ -5,10 +5,14 @@ public class IndirectRecursion {
 
     private void a() {
         System.out.println(count);
-        b();
+        if (count < 100) {
+            count++;
+            b();
+        }
     }
 
     private void b() {
+        System.out.println(count);
         if (count < 100) {
             count++;
             a();
