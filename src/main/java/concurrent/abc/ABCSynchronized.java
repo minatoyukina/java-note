@@ -1,6 +1,6 @@
 package concurrent.abc;
 
-public class ABC1 {
+public class ABCSynchronized {
     private static int count = 1;
     private static final Object lock = new Object();
 
