@@ -21,23 +21,22 @@ public class Demo01 {
         String a = nodeToString("", l1), b = nodeToString("", l2);
         String c = new BigDecimal(a).add(new BigDecimal(b)).toString();
         ListNode node = new ListNode(Integer.parseInt(c.charAt(c.length() - 1) + ""));
-        stringToNode(node, c);
-        return node;
+        return stringToNode(node, c);
     }
 
-    private void stringToNode(ListNode pre, String str) {
+    private ListNode stringToNode(ListNode pre, String str) {
         String s = str.substring(0, str.length() - 1);
         if (!s.isEmpty()) {
             pre.next = new ListNode(Integer.parseInt(s.charAt(s.length() - 1) + ""));
             stringToNode(pre.next, s);
         }
+        return pre;
     }
 
     private String nodeToString(String str, ListNode l) {
-        if (l.next == null) {
-            return l.val + str;
-        } else {
+        if (l.next != null) {
             return nodeToString(l.val + str, l.next);
         }
+        return l.val + str;
     }
 }
