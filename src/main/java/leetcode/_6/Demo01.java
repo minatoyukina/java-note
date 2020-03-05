@@ -18,23 +18,23 @@ public class Demo01 {
             return s;
         }
         int round = s.length() / peer + 1;
-        int numCols = (numRows - 1) * round - 1;
+        int numCols = (numRows - 1) * round;
         StringBuilder answer = new StringBuilder();
-        String[][] chars = new String[numRows][numCols];
+        char[][] chars = new char[numRows][numCols];
         for (int i = 0; i < s.length(); i++) {
             int x = i / peer;
             int y = i % peer;
             if (y < numRows) {
-                chars[y][x * (numRows - 1)] = s.charAt(i) + "";
+                chars[y][x * (numRows - 1)] = s.charAt(i);
             } else {
-                chars[numRows - y % numRows - 2][x * (numRows - 1) + y % numRows + 1] = s.charAt(i) + "";
+                chars[numRows - y % numRows - 2][x * (numRows - 1) + y % numRows + 1] = s.charAt(i);
             }
-            System.out.println(Arrays.deepToString(chars).replaceAll("null", " "));
+            System.out.println(Arrays.deepToString(chars).replaceAll("\\u0000", " "));
         }
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < numCols; j++) {
-                String s1 = chars[i][j];
-                if (s1 != null) {
+                char s1 = chars[i][j];
+                if (s1 != '\u0000') {
                     answer.append(s1);
                 }
             }
