@@ -10,8 +10,8 @@ public class Demo01 {
 
     @Test
     public void test() {
-        System.out.println(letterCombinations("23"));
-        System.out.println(letterCombinations("23421"));
+        System.out.println(letterCombinations("234"));
+        System.out.println(letterCombinations("23421987"));
     }
 
     private List<String> letterCombinations(String digits) {
@@ -26,11 +26,9 @@ public class Demo01 {
         map.put("8", Arrays.asList("t", "u", "v"));
         map.put("9", Arrays.asList("w", "x", "y", "z"));
         List<List<String>> list = new ArrayList<>();
-        for (int i = 0; i < digits.length(); i++) {
-            List<String> stringList = map.get(digits.charAt(i) + "");
-            list.add(stringList);
-        }
-        return list.stream().reduce((x, y) -> x.stream().map(i -> y.stream().map(j -> i + j)).flatMap(Function.identity()).collect(Collectors.toList())).orElse(null);
+        Arrays.stream(digits.split("")).forEach(s -> list.add(map.get(s)));
+        return list.stream().reduce((x, y) -> x.stream().map(i -> y.stream().map(j -> i + j))
+                .flatMap(Function.identity()).collect(Collectors.toList())).orElse(null);
 //        return list.stream().reduce((x, y) -> {
 //            List<String> tmp = new ArrayList<>();
 //            x.forEach(a -> y.forEach(b -> tmp.add(a + b)));
