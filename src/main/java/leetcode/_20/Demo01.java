@@ -15,7 +15,7 @@ public class Demo01 {
         System.out.println(isValid("([)]"));
     }
 
-    private boolean isValid(String s) {
+    public static boolean isValid(String s) {
         Map<Character, Character> map = new HashMap<>(3);
         map.put('(', ')');
         map.put('{', '}');
@@ -23,7 +23,7 @@ public class Demo01 {
         Stack<Character> stack = new Stack<>();
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if (c == '(' || c == '[' || c == '{') {
+            if (map.containsKey(c)) {
                 stack.push(c);
             } else {
                 if (stack.isEmpty() || !map.get(stack.pop()).equals(c)) {
