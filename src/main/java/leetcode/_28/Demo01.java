@@ -2,8 +2,6 @@ package leetcode._28;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-
 public class Demo01 {
 
     @Test
