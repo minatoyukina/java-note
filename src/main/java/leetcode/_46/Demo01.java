@@ -26,8 +26,8 @@ public class Demo01 {
     private void permute(Map<List<Integer>, List<Integer>> map, List<Integer> nums) {
         if (map.size() == 0) {
             for (Integer word : nums) {
-                List<Integer> values = new ArrayList<>(nums);
                 List<Integer> keys = new ArrayList<>();
+                List<Integer> values = new ArrayList<>(nums);
                 keys.add(word);
                 values.remove(word);
                 map.put(keys, values);
@@ -38,8 +38,8 @@ public class Demo01 {
                 map.remove(x);
                 for (Integer s : y) {
                     List<Integer> keys = new ArrayList<>(x);
-                    keys.add(s);
                     List<Integer> values = new ArrayList<>(y);
+                    keys.add(s);
                     values.remove(s);
                     map.put(keys, values);
                     permute(map, values);
