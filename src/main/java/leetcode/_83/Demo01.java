@@ -7,14 +7,7 @@ public class Demo01 {
 
     @Test
     public void test() {
-        ListNode node = new ListNode(1);
-        node.next = new ListNode(1);
-        node.next.next = new ListNode(2);
-        node.next.next.next = new ListNode(3);
-        node.next.next.next.next = new ListNode(3);
-        node.next.next.next.next.next = new ListNode(3);
-        node.next.next.next.next.next.next = new ListNode(4);
-        System.out.println(deleteDuplicates(node));
+        System.out.println(deleteDuplicates(new ListNode(1, new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(3, new ListNode(4))))))));
     }
 
     private ListNode deleteDuplicates(ListNode head) {
