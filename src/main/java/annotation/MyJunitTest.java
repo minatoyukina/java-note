@@ -13,10 +13,10 @@ public class MyJunitTest {
 
     @Test
     public void testUpdate(){
-        System.out.println("count :testUpdate()");
+        System.out.println("test :testUpdate()");
     }
     @Test
     public void testAdd(){
-        System.out.println("count :testAdd()");
+        System.out.println("test :testAdd()");
     }
 }

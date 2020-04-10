@@ -3,7 +3,7 @@ package jni;
 public class JNIExample {
 
     static {
-        System.loadLibrary("count");
+        System.loadLibrary("test");
     }
 
     public static native String getStringFromC();
