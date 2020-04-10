@@ -6,7 +6,7 @@ public class Test {
         System.out.println("通知学生答题：777-111=？");
         CallbackTest test = new CallbackTest();
         test.handleThings(string -> System.out.println("答案是 " + string ));
-//        test.handleThings(new Callback() {
+//        count.handleThings(new Callback() {
 //            @Override
 //            public void sendMessage(String string) {
 //                System.out.println("答案是 " + string);

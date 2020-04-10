@@ -101,7 +101,7 @@ public class Reentrant {
 
     public static void main(String[] args) throws InterruptedException {
 //        sync();
-//        test();
+//        count();
         reentrant();
     }
 }
