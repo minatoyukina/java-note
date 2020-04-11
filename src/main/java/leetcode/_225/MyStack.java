@@ -5,7 +5,6 @@ import org.junit.Test;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
-@SuppressWarnings("all")
 public class MyStack {
 
     private Queue<Integer> queue;
@@ -15,6 +14,7 @@ public class MyStack {
     public void test() {
         MyStack obj = new MyStack();
         obj.push(1);
+        obj.push(2);
         int param_3 = obj.top();
         int param_2 = obj.pop();
         boolean param_4 = obj.empty();
@@ -29,12 +29,12 @@ public class MyStack {
     }
 
 
-    public void push(int x) {
+    private void push(int x) {
         queue.add(x);
     }
 
 
-    public int pop() {
+    private int pop() {
         int a = 0;
         backUp = new ArrayBlockingQueue<>(10);
         while (!queue.isEmpty()) {
@@ -46,7 +46,7 @@ public class MyStack {
     }
 
 
-    public int top() {
+    private int top() {
         int a = 0;
         backUp = new ArrayBlockingQueue<>(10);
         while (!queue.isEmpty()) {
@@ -57,7 +57,7 @@ public class MyStack {
         return a;
     }
 
-    public boolean empty() {
+    private boolean empty() {
         return queue.isEmpty();
     }
 }
