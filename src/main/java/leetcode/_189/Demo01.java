@@ -10,14 +10,16 @@ public class Demo01 {
     public void test() {
         int[] ints = new int[]{1, 2, 3, 4, 5, 6, 7};
         rotate(ints, 3);
+        rotate(ints, 4);
         System.out.println(Arrays.toString(ints));
     }
 
     private void rotate(int[] nums, int k) {
-        for (int i = 0; i <= k - 1; i++) {
-            int tmp = nums[i];
-            nums[i] = nums[nums.length - k + i];
-            nums[k + i] = tmp;
+        k %= nums.length;
+        for (int j = 0; j < k; j++) {
+            int tmp = nums[nums.length - 1];
+            System.arraycopy(nums, 0, nums, 1, nums.length - 1);
+            nums[0] = tmp;
         }
     }
 }
