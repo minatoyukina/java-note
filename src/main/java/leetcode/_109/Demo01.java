@@ -1,6 +1,6 @@
 package leetcode._109;
 
-import leetcode._100.TreeNode;
+import leetcode._50__100._100.TreeNode;
 import leetcode._1__50._2.ListNode;
 import org.junit.Test;
 
@@ -22,9 +22,8 @@ public class Demo01 {
     private ListNode middle(ListNode head) {
         ListNode slow = head;
         ListNode fast = head;
-        while (slow != null && fast != null) {
-            if (fast.next != null) fast = fast.next.next;
-            else break;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
             slow = slow.next;
         }
         return slow;
@@ -34,18 +33,16 @@ public class Demo01 {
         if (head.next == null) return null;
         ListNode tmp = head;
         while (tmp != null) {
-            if (tmp.next != null && tmp.next.next == middle) {
-                tmp.next = null;
-                break;
-            }
+            if (tmp.next == middle) tmp.next = null;
             tmp = tmp.next;
         }
         return head;
     }
 
     private void dfs(TreeNode root, ListNode head) {
-        ListNode right = middle(head).next;
-        ListNode left = pre(head, right);
+        ListNode middle = middle(head);
+        ListNode left = pre(head, middle);
+        ListNode right = middle.next;
         if (left != null) {
             root.left = new TreeNode(middle(left).val);
             dfs(root.left, left);

@@ -1,6 +1,6 @@
 package leetcode._50__100._94;
 
-import leetcode._100.TreeNode;
+import leetcode._50__100._100.TreeNode;
 import org.junit.Test;
 
 import java.util.LinkedList;

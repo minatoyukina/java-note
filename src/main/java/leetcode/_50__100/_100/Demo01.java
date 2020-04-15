@@ -1,4 +1,4 @@
-package leetcode._100;
+package leetcode._50__100._100;
 
 import org.junit.Test;
 
