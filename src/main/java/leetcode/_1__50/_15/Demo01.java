@@ -2,10 +2,7 @@ package leetcode._1__50._15;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class Demo01 {
 
@@ -13,47 +10,26 @@ public class Demo01 {
     public void test() {
         System.out.println(threeSum(new int[]{-1, 0, 1, 2, -1, -4}));
         System.out.println(threeSum(new int[]{-1, 0, 1}));
-        System.out.println(threeSum(new int[]{1, 2, -2, -1}));
+        System.out.println(threeSum(new int[]{0, 0, 0}));
     }
 
     private List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> list = new ArrayList<>();
-        int length = nums.length;
-        List<Integer> collect = Arrays.stream(nums).boxed().collect(Collectors.toList());
-        if (length < 3) {
-            return list;
-        }
-        for (int i = 0; i < length; i++) {
-            collect.remove(0);
-            for (int j = i + 1; j < length; j++) {
-//                int x = nums[i], y = nums[j], z = 0 - x - y;
-//                if (collect.contains(z)) {
-//                    List<Integer> integerList = new ArrayList<>();
-//                    int min = Math.min(Math.min(x, y), z);
-//                    int max = Math.max(Math.max(x, y), z);
-//                    integerList.add(min);
-//                    integerList.add(0 - min - max);
-//                    integerList.add(max);
-//                    if (!list.contains(integerList)) {
-//                        list.add(integerList);
-//                    }
-//                }
-                for (int k = j + 1; k < length; k++) {
-                    int x = nums[i], y = nums[j], z = nums[k];
-                    if (x + y + z == 0) {
-                        List<Integer> integerList = new ArrayList<>();
-                        int min = Math.min(Math.min(x, y), z);
-                        int max = Math.max(Math.max(x, y), z);
-                        integerList.add(min);
-                        integerList.add(0 - min - max);
-                        integerList.add(max);
-//                        if (!list.contains(integerList))
-                        list.add(integerList);
-
-                    }
+        Arrays.sort(nums);
+        Set<List<Integer>> ans = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) break;
+            Map<Integer, Integer> map = new HashMap<>();
+            for (int j = i + 1; j < nums.length; j++) {
+                if (map.containsKey(nums[j])) {
+                    int x = nums[i], y = nums[j], z = nums[map.get(nums[j])];
+                    int max = Math.max(x, Math.max(y, z));
+                    int min = Math.min(x, Math.min(y, z));
+                    ans.add(Arrays.asList(min, 0 - max - min, max));
                 }
+                map.put(0 - nums[i] - nums[j], j);
+                if (i >= 1) if (nums[i - 1] + nums[i] + nums[j] >= 0) break;
             }
         }
-        return list.stream().distinct().collect(Collectors.toList());
+        return new ArrayList<>(ans);
     }
 }

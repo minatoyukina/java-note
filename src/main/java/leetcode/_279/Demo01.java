@@ -7,29 +7,24 @@ public class Demo01 {
 
     @Test
     public void test() {
-//        System.out.println(numSquares(13));
-        System.out.println(numSquares(20));
+        System.out.println(numSquares(13));
+        System.out.println(numSquares(18));
     }
 
     private int numSquares(int n) {
-        return numSquares(n, 0);
-    }
-
-    private int numSquares(int n, int count) {
-        if (n <= 3) return count + n;
         int sqrt = (int) Math.sqrt(n);
-        int a = n;
-        int x = n;
-        for (int i = sqrt; i > 0; i--) {
-            int tmp = i * i;
-            int b = n / tmp + (n % tmp);
-            if (b < a) {
-                a = b;
-                x = i;
+        if (n == sqrt * sqrt) return 1;
+        for (int i = 1; i <= sqrt; i++) {
+            int x = (int) Math.sqrt(n - i * i);
+            if (n == i * i + x * x) return 2;
+        }
+        for (int i = 1; i <= sqrt; i++) {
+            for (int j = 1; j <= sqrt; j++) {
+                int y = (int) Math.sqrt(n - i * i - j * j);
+                if (n == i * i + j * j + y * y) return 3;
             }
         }
-        System.out.println(x * x);
-        return numSquares(n - x * x, ++count);
+        return 4;
     }
 
 }
