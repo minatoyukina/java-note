@@ -1,4 +1,4 @@
-package leetcode._1__50._61;
+package leetcode._50__100._61;
 
 import leetcode._1__50._2.ListNode;
 import org.junit.Test;
