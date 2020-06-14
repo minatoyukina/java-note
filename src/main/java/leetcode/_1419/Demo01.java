@@ -2,11 +2,8 @@ package leetcode._1419;
 
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Demo01 {
 
@@ -19,8 +16,6 @@ public class Demo01 {
     }
 
     private int minNumberOfFrogs(String croakOfFrogs) {
-        Map<String, Long> m = Arrays.stream(croakOfFrogs.split("")).collect(Collectors.groupingBy(t -> t, Collectors.counting()));
-        if (m.size() != 5 || new HashSet<>(m.values()).size() != 1) return -1;
         Map<String, Integer> map = new HashMap<>();
         char[] chars = croakOfFrogs.toCharArray();
         for (char c : chars) {
