@@ -2,7 +2,7 @@ package leetcode._251__300._300;
 
 import org.junit.Test;
 
-import java.util.*;
+import java.util.Arrays;
 
 public class Demo01 {
 
@@ -10,26 +10,24 @@ public class Demo01 {
     @Test
     public void test() {
         System.out.println(lengthOfLIS(new int[]{10, 9, 2, 5, 3, 7, 101, 18}));
-        System.out.println(lengthOfLIS(new int[]{10, 9, 2, 5, 3, 4}));
+        System.out.println(lengthOfLIS(new int[]{2, 5, 3, 4}));
+        System.out.println(lengthOfLIS(new int[]{1, 3, 6, 7, 9, 4, 10, 5, 6}));
     }
 
 
     private int lengthOfLIS(int[] nums) {
-        Map<Integer, List<Integer>> map = new HashMap<>();
-        for (int num : nums) {
-            if (!map.containsKey(num)) {
-                List<Integer> list = new ArrayList<>();
-                list.add(num);
-                map.putIfAbsent(num, list);
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp, 1);
+        for (int i = 0; i < nums.length; i++) {
+            int max = 0;
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    max = Math.max(dp[j], max);
+                }
             }
-            for (Map.Entry<Integer, List<Integer>> entry : map.entrySet()) {
-                Integer x = entry.getKey();
-                List<Integer> y = entry.getValue();
-                if (num > y.get(y.size() - 1)) map.get(x).add(num);
-            }
+            if (max > 0) dp[i] = max + 1;
         }
-        System.out.println(map);
-        return map.values().stream().max(Comparator.comparingInt(List::size)).orElse(new ArrayList<>()).size();
+        return Arrays.stream(dp).max().orElse(0);
     }
 
 }
