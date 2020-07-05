@@ -1,20 +1,16 @@
 package leetcode.util;
 
-import leetcode._50__100._100.TreeNode;
+import leetcode._1__50._2.ListNode;
 
-import java.util.List;
+final public class Common {
 
-public class Common {
-
-    public static TreeNode listToTreeNode(List<Integer> list) {
-        TreeNode node = null;
-        for (Integer integer : list) {
-            if (node == null) {
-                node = new TreeNode(integer);
-                continue;
-            }
-            node.left = new TreeNode(integer);
+    public static ListNode arrayToNode(int[] arr) {
+        ListNode head = new ListNode(arr[0]);
+        ListNode tmp = head;
+        for (int i = 1; i < arr.length; i++) {
+            tmp.next = new ListNode(arr[i]);
+            tmp = tmp.next;
         }
-        return node;
+        return head;
     }
 }
