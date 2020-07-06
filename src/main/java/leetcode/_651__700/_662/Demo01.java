@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Demo01 {
 
-
     @Test
     public void test() {
         System.out.println(widthOfBinaryTree(new TreeNode(1,
@@ -37,9 +36,7 @@ public class Demo01 {
                 List<Integer> sub = new ArrayList<>();
                 sub.add(offset);
                 list.add(sub);
-            } else {
-                list.get(n).add(offset);
-            }
+            } else list.get(n).add(offset);
             offset *= 2;
             dfs(root.left, list, n + 1, offset >= 0 ? offset - 1 : offset);
             dfs(root.right, list, n + 1, offset <= 0 ? offset + 1 : offset);
