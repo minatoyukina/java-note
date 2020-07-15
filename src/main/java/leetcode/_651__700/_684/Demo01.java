@@ -31,18 +31,14 @@ public class Demo01 {
         for (int i = 0; i < arr.length; i++) {
             arr[i] = i;
         }
-        for (int i = 0; i < edges.length; i++) {
-            for (int j = i + 1; j < edges.length; j++) {
-                if (edges[i][0] == edges[j][0]
-                        || edges[i][1] == edges[j][0]
-                        || edges[i][0] == edges[j][1]) {
-                    merge(i, j);
-                }
+        for (int[] edge : edges) {
+            int x = find(edge[0] - 1);
+            int y = find(edge[1] - 1);
+            if (x == y) {
+                return edge;
+            } else {
+                merge(edge[0] - 1, edge[1] - 1);
             }
-        }
-        System.out.println(Arrays.toString(arr));
-        for (int i = 1; i < arr.length; i++) {
-            if (arr[i] == arr[i - 1]) return edges[i];
         }
         return edges[edges.length - 1];
     }

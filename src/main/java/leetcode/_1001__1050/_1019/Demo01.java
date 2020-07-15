@@ -1,7 +1,6 @@
-package leetcode._1019;
+package leetcode._1001__1050._1019;
 
 import leetcode._1__50._2.ListNode;
-import leetcode._50__100._100.TreeNode;
 import leetcode.util.Common;
 import org.junit.Test;
 
