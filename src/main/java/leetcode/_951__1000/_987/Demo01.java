@@ -12,7 +12,7 @@ public class Demo01 {
 
     @Test
     public void test() {
-        System.out.println(verticalTraversal(Common.arrayToTree("[3,9,20,null,null,15,7]")));
+        System.out.println(verticalTraversal(Common.arrayToTree(new Integer[]{3, 9, 20, null, null, 15, 7})));
     }
 
 

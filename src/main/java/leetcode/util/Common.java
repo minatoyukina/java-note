@@ -19,16 +19,13 @@ final public class Common {
         return head;
     }
 
-    public static TreeNode arrayToTree(String src) {
-        src = src.substring(1, src.length() - 1).trim();
-        String[] strList = src.split(",");
-
+    public static TreeNode arrayToTree(Integer[] arr) {
         TreeNode root;
         TreeNode result = null;
         Queue<TreeNode> queue = new LinkedList<>();
-        for (int i = 0; i < strList.length; i++) {
+        for (int i = 0; i < arr.length; i++) {
             if (i == 0) {
-                root = new TreeNode(Integer.parseInt(strList[i]));
+                root = new TreeNode(arr[i]);
                 result = root;
                 queue.add(root);
             }
@@ -37,12 +34,12 @@ final public class Common {
             } else {
                 break;
             }
-            if (i + 1 < strList.length && !strList[i + 1].trim().equals("null")) {
-                root.left = new TreeNode(Integer.parseInt(strList[i + 1].trim()));
+            if (i + 1 < arr.length && arr[i + 1] != null) {
+                root.left = new TreeNode(arr[i + 1]);
                 queue.add(root.left);
             }
-            if (i + 2 < strList.length && !strList[i + 2].trim().equals("null")) {
-                root.right = new TreeNode(Integer.parseInt(strList[i + 2].trim()));
+            if (i + 2 < arr.length && arr[i + 2] != null) {
+                root.right = new TreeNode(arr[i + 2]);
                 queue.add(root.right);
             }
             i = i + 1;
@@ -53,6 +50,6 @@ final public class Common {
 
     @Test
     public void test() {
-        System.out.println(arrayToTree("[ 1, 2, 3, null, 4, null, null, 5, 6]"));
+        System.out.println(arrayToTree(new Integer[]{1, 2, 3, null, 4, null, null, 5, 6}));
     }
 }
