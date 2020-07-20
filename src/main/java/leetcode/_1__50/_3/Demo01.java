@@ -3,7 +3,9 @@ package leetcode._1__50._3;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Demo01 {
 
@@ -11,6 +13,9 @@ public class Demo01 {
     public void test() {
         System.out.println(lengthOfLongestSubstring("abc"));
         System.out.println(lengthOfLongestSubstring("aaa"));
+
+        System.out.println(lengthOfLongestSubstring1("abc"));
+        System.out.println(lengthOfLongestSubstring1("aaa"));
     }
 
     private int lengthOfLongestSubstring(String s) {
@@ -37,5 +42,17 @@ public class Demo01 {
         } else if (s.isEmpty()) {
             list.add(0);
         }
+    }
+
+    private int lengthOfLongestSubstring1(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        int start = 0, end = 0, ans = 0;
+        char[] chars = s.toCharArray();
+        for (char c : chars) {
+            if (map.containsKey(c)) start = Math.max(map.get(c) + 1, start);
+            ans = Math.max(ans, end - start + 1);
+            map.put(c, end++);
+        }
+        return ans;
     }
 }
