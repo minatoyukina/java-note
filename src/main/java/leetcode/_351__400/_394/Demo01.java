@@ -2,79 +2,62 @@ package leetcode._351__400._394;
 
 import org.junit.Test;
 
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayDeque;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Demo01 {
 
 
     @Test
     public void test() {
-//        System.out.println(decodeString("3[a]2[bc]"));
-//        System.out.println(decodeString("3[a2[c]]"));
-        System.out.println(getMoneyAmount(6));
+        System.out.println(decodeString("3[a]2[bc]"));
+        System.out.println(decodeString("3[a2[c]]"));
+        System.out.println(decodeString("11[ab]"));
+        System.out.println(decodeString("23[abc34[cd]]56[xy]"));
     }
-
-    public int getMoneyAmount(int n) {
-        int ans = 0;
-        int i = (1 + n) / 2;
-        if (n % 2 == 0 && i + 1 != n) ans += n - 1;
-        while (i < n) {
-            ans += i;
-            i += 2;
-        }
-        return ans;
-    }
-
 
     private String decodeString(String s) {
-        List<Integer> l1 = new ArrayList<>();
-        List<String> l2 = new ArrayList<>();
-        StringTokenizer tokenizer = new StringTokenizer(s, "[]", false);
-        while (tokenizer.hasMoreTokens()) {
-            String token = tokenizer.nextToken();
-            String regEx = "[^0-9]";
-            Pattern p = Pattern.compile(regEx);
-            Matcher m = p.matcher(token);
-            String num = m.replaceAll("");
-            l1.add(Integer.parseInt(num));
-            l2.add(token.replace(num, ""));
-        }
-        return Arrays.stream(s.split("]"))
-                .map(x -> x.split("\\[")).map(x -> {
-                    if (x.length == 1) return x[0];
-                    else {
-                        int i = Integer.parseInt(x[0]);
-                        StringBuilder sb = new StringBuilder();
-                        for (int j = 0; j < i; j++) {
-                            sb.append(x[1]);
-                        }
-                        return sb.toString();
+        if (s.contains("[")) {
+            Map<Integer, Integer> map = new HashMap<>();
+            Map<Integer, Integer> num = new HashMap<>();
+            StringBuilder tmp = new StringBuilder();
+            ArrayDeque<Integer> stack = new ArrayDeque<>();
+            for (int i = 0; i < s.length(); i++) {
+                if (s.charAt(i) >= '0' && s.charAt(i) <= '9') {
+                    tmp.append(s.charAt(i));
+                } else if (s.charAt(i) == '[') {
+                    num.put(i, Integer.parseInt(tmp.toString()));
+                    tmp = new StringBuilder();
+                    if (stack.isEmpty()) {
+                        stack.push(i);
+                    } else {
+                        stack.pop();
+                        stack.push(i);
                     }
-                }).reduce((x, y) -> x + y).orElse("");
-    }
-
-    int firstUniqChar(String s) {
-        Map<Character, Integer> map = new LinkedHashMap<>();
-        for (int i = 0; i < s.length(); i++) map.merge(s.charAt(i), 1, (a, b) -> a + b);
-        for (Map.Entry<Character, Integer> entry : map.entrySet())
-            if (entry.getKey() == 1) return s.indexOf(entry.getKey());
-        return -1;
-    }
-
-    boolean canConstruct(String ransomNote, String magazine) {
-        Map<Character, Integer> map = new HashMap<>();
-        for (int i = 0; i < magazine.length(); i++) {
-            map.merge(magazine.charAt(i), 1, (a, b) -> a + b);
+                } else {
+                    tmp = new StringBuilder();
+                }
+                if (s.charAt(i) == ']' && !stack.isEmpty()) {
+                    map.put(stack.pop(), i);
+                }
+            }
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < s.length(); i++) {
+                if (map.containsKey(i)) {
+                    String substring = s.substring(i + 1, map.get(i));
+                    for (int j = 0; j < num.get(i); j++) sb.append(substring);
+                    i = map.get(i);
+                } else sb.append(s.charAt(i));
+            }
+            for (Integer value : num.values()) {
+                int k;
+                while ((k = sb.indexOf(value.toString())) >= 0 && sb.charAt(k + value.toString().length()) != '[') {
+                    sb.delete(k, k + value.toString().length());
+                }
+            }
+            return decodeString(sb.toString());
         }
-        for (int i = 0; i < ransomNote.length(); i++) {
-            char c = ransomNote.charAt(i);
-            Integer integer = map.get(c);
-            if (integer == null || integer == 0) return false;
-            else map.put(c, integer - 1);
-        }
-        return true;
+        return s;
     }
-
 }
