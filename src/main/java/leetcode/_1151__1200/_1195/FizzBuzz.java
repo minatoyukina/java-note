@@ -1,4 +1,4 @@
-package leetcode._1195;
+package leetcode._1151__1200._1195;
 
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.IntConsumer;

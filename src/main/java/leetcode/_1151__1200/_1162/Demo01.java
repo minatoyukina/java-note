@@ -1,4 +1,4 @@
-package leetcode._1162;
+package leetcode._1151__1200._1162;
 
 import javafx.util.Pair;
 import org.junit.Test;
