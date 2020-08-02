@@ -25,10 +25,7 @@ public class Demo01 {
     private void dfs(TreeNode root, int level, List<Integer> list) {
         if (root != null) {
             if (list.size() > level) {
-                if (list.get(level) < root.val) {
-                    list.remove(level);
-                    list.add(level, root.val);
-                }
+                if (list.get(level) < root.val) list.set(level, root.val);
             } else list.add(root.val);
             dfs(root.left, level + 1, list);
             dfs(root.right, level + 1, list);
