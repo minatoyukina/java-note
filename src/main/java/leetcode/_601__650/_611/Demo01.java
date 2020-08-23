@@ -18,10 +18,8 @@ public class Demo01 {
         for (int i = nums.length - 1; i >= 2; i--) {
             int lo = 0, hi = i - 1;
             while (lo < hi) {
-                if (nums[lo] + nums[hi] > nums[i]) {
-                    ans += hi - lo;
-                    hi--;
-                } else lo++;
+                if (nums[lo] + nums[hi] > nums[i]) ans += hi-- - lo;
+                else lo++;
             }
         }
         return ans;
