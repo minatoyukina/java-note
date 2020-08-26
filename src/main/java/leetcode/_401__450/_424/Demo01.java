@@ -20,19 +20,19 @@ public class Demo01 {
     private int characterReplacement(String s, int k) {
         Map<Character, Integer> map = new HashMap<>();
         char[] chars = s.toCharArray();
-        int ans = 0, l = 0, r = 0, tmp = k;
+        int ans = 0, l = 0, r = 0, count = k;
         while (r < s.length()) {
-            if (tmp > 0 || (tmp == 0 && chars[l] == chars[r])) {
-                if (chars[l] != chars[r]) tmp--;
+            if (count > 0 || (count == 0 && chars[l] == chars[r])) {
+                if (chars[l] != chars[r]) count--;
                 map.put(chars[r], map.getOrDefault(chars[r], 0) + 1);
                 r++;
-                if (r == s.length()) ans = Math.max(ans, r - l + Math.min(tmp, l));
+                if (r == s.length()) ans = Math.max(ans, r - l + Math.min(count, l));
             } else {
                 ans = Math.max(ans, r - l);
                 if (l + 1 < chars.length) {
                     map.put(chars[l], map.get(chars[l]) - 1);
                     l++;
-                    tmp = k - (r - l - map.getOrDefault(chars[l], 0));
+                    count = k - (r - l - map.getOrDefault(chars[l], 0));
                 }
             }
         }
