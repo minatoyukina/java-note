@@ -2,7 +2,6 @@ package leetcode._551__600._567;
 
 import org.junit.Test;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,8 +30,7 @@ public class Demo01 {
         map1.forEach((x, y) -> {
             if (!map2.containsKey(x)) map2.put(x, -y);
         });
-        Collection<Integer> values = map2.values();
-        while (values.contains(0)) values.remove(0);
+        map2.values().removeIf(x -> x == 0);
         for (int i = 0; i < s2.length() - s1.length(); i++) {
             if (map2.isEmpty()) return true;
             char a = s2.charAt(i);
