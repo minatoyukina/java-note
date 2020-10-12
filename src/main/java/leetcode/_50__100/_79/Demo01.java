@@ -8,7 +8,7 @@ public class Demo01 {
     public void test() {
         char[][] board = {
                 new char[]{'A', 'B', 'C', 'E'},
-                new char[]{'S', 'F', 'E', 'S'},
+                new char[]{'S', 'F', 'C', 'S'},
                 new char[]{'A', 'D', 'E', 'E'},
         };
         System.out.println(exist(board, "ABCCED"));
@@ -21,7 +21,7 @@ public class Demo01 {
         char[] chars = word.toCharArray();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                if (dfs(board, chars, i, j, 0, new boolean[board.length][board[i].length], 0)) {
+                if (dfs(board, chars, i, j, 0, new boolean[board.length][board[i].length])) {
                     return true;
                 }
             }
@@ -29,22 +29,16 @@ public class Demo01 {
         return false;
     }
 
-    private boolean dfs(char[][] board, char[] chars, int i, int j, int offset, boolean[][] visited, int direction) {
+    private boolean dfs(char[][] board, char[] chars, int i, int j, int offset, boolean[][] visited) {
         if (offset == chars.length) return true;
         if (inRange(board, i, j) && !visited[i][j] && board[i][j] == chars[offset++]) {
-            if (offset < chars.length
-                    && (direction == 2 || (!inRange(board, i - 1, j) || board[i - 1][j] != chars[offset]))
-                    && (direction == 1 || (!inRange(board, i + 1, j) || board[i + 1][j] != chars[offset]))
-                    && (direction == 4 || (!inRange(board, i, j - 1) || board[i][j - 1] != chars[offset]))
-                    && (direction == 3 || (!inRange(board, i, j + 1) || board[i][j + 1] != chars[offset]))
-            ) {
-                visited[i][j] = false;
-            } else
-                visited[i][j] = true;
-            return dfs(board, chars, i - 1, j, offset, visited, 1)
-                    || dfs(board, chars, i + 1, j, offset, visited, 2)
-                    || dfs(board, chars, i, j - 1, offset, visited, 3)
-                    || dfs(board, chars, i, j + 1, offset, visited, 4);
+            visited[i][j] = true;
+            boolean b = dfs(board, chars, i - 1, j, offset, visited)
+                    || dfs(board, chars, i + 1, j, offset, visited)
+                    || dfs(board, chars, i, j - 1, offset, visited)
+                    || dfs(board, chars, i, j + 1, offset, visited);
+            visited[i][j] = false;
+            return b;
         }
         return false;
     }
