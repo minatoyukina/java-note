@@ -16,12 +16,12 @@ public class Demo01 {
 
     private boolean checkValidString(String s) {
         Stack<Character> stack = new Stack<>();
+        while (s.contains("()")) s = s.replace("()", "");
         return check(s, stack);
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings("unchecked")
     private boolean check(String s, Stack<Character> stack) {
-        while (s.contains("()")) s = s.replace("()", "");
         char[] chars = s.toCharArray();
         for (int i = 0; i < chars.length; i++) {
             char c = chars[i];
