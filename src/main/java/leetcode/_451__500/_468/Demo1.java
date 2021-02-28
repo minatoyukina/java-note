@@ -31,7 +31,8 @@ public class Demo1 {
             if (s.length() > 4 || s.length() == 0) return false;
             char[] chars = s.toCharArray();
             for (char c : chars)
-                if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))) return false;
+                if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')))
+                    return false;
         }
         return true;
     }
