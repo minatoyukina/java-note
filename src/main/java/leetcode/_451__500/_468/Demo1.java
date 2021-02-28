@@ -19,6 +19,7 @@ public class Demo1 {
             if (isIPv4(IP)) return "IPv4";
             if (isIPv6(IP)) return "IPv6";
         } catch (Exception ignored) {
+
         }
         return "Neither";
     }
