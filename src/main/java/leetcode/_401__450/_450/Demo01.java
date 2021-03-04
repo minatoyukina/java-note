@@ -8,10 +8,10 @@ public class Demo01 {
 
     @Test
     public void test() {
-        System.out.println(deleteNode(Common.arrayToTree(new Integer[]{5, 3, 6, 2, 4, null, 7}), 7));
-        System.out.println(deleteNode(Common.arrayToTree(new Integer[]{2, 1, 3}), 3));
-        System.out.println(deleteNode(Common.arrayToTree(new Integer[]{1, null, 2, null, 3, null, 4, null, 5}), 5));
-        System.out.println(deleteNode(Common.arrayToTree(new Integer[]{5, 4, null, 3, null, 2, null, 1}), 3));
+        System.out.println(deleteNode(Common.arrayToTree(5, 3, 6, 2, 4, null, 7), 7));
+        System.out.println(deleteNode(Common.arrayToTree(2, 1, 3), 3));
+        System.out.println(deleteNode(Common.arrayToTree(1, null, 2, null, 3, null, 4, null, 5), 5));
+        System.out.println(Common.treeToList(deleteNode(Common.arrayToTree(5, 4, null, 3, null, 2, null, 1), 3)));
     }
 
 

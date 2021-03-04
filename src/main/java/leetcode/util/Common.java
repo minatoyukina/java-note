@@ -11,7 +11,7 @@ import java.util.Queue;
 
 final public class Common {
 
-    public static ListNode arrayToNode(int[] arr) {
+    public static ListNode arrayToNode(int... arr) {
         ListNode head = new ListNode(arr[0]);
         ListNode tmp = head;
         for (int i = 1; i < arr.length; i++) {
@@ -21,7 +21,8 @@ final public class Common {
         return head;
     }
 
-    public static List<Integer> treeToArray(TreeNode node) {
+
+    public static List<Integer> treeToList(TreeNode node) {
         LinkedList<Integer> list = new LinkedList<>();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(node);
@@ -41,7 +42,7 @@ final public class Common {
         return list;
     }
 
-    public static TreeNode arrayToTree(Integer[] arr) {
+    public static TreeNode arrayToTree(Integer... arr) {
         TreeNode root;
         TreeNode result = null;
         Queue<TreeNode> queue = new LinkedList<>();
@@ -56,6 +57,7 @@ final public class Common {
             } else {
                 break;
             }
+            assert root != null;
             if (i + 1 < arr.length && arr[i + 1] != null) {
                 root.left = new TreeNode(arr[i + 1]);
                 queue.add(root.left);
@@ -72,8 +74,7 @@ final public class Common {
 
     @Test
     public void test() {
-        TreeNode treeNode = arrayToTree(new Integer[]{1, 2, 3, null, 4, null, null, 5, 6});
+        TreeNode treeNode = arrayToTree(1, 2, 3, null, 4, null, null, 5, 6);
         System.out.println(treeNode);
-        System.out.println(treeToArray(treeNode));
     }
 }
