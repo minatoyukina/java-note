@@ -5,6 +5,8 @@ import leetcode._50__100._100.TreeNode;
 import org.junit.Test;
 
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
 
 final public class Common {
@@ -17,6 +19,26 @@ final public class Common {
             tmp = tmp.next;
         }
         return head;
+    }
+
+    public static List<Integer> treeToArray(TreeNode node) {
+        LinkedList<Integer> list = new LinkedList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(node);
+        list.add(node.val);
+        while (!queue.isEmpty()) {
+            TreeNode poll = queue.poll();
+            if (poll != null) {
+                list.add(Optional.ofNullable(poll.left).map(s -> s.val).orElse(null));
+                list.add(Optional.ofNullable(poll.right).map(s -> s.val).orElse(null));
+                queue.offer(poll.left);
+                queue.offer(poll.right);
+            }
+        }
+        while (list.peekLast() == null) {
+            list.pollLast();
+        }
+        return list;
     }
 
     public static TreeNode arrayToTree(Integer[] arr) {
@@ -50,6 +72,8 @@ final public class Common {
 
     @Test
     public void test() {
-        System.out.println(arrayToTree(new Integer[]{1, 2, 3, null, 4, null, null, 5, 6}));
+        TreeNode treeNode = arrayToTree(new Integer[]{1, 2, 3, null, 4, null, null, 5, 6});
+        System.out.println(treeNode);
+        System.out.println(treeToArray(treeNode));
     }
 }
