@@ -1,4 +1,4 @@
-package leetcode._151__200._198;
+package leetcode._201__250._213;
 
 import org.junit.Test;
 
@@ -6,12 +6,25 @@ public class Demo01 {
 
     @Test
     public void test() {
+        System.out.println(rob(new int[0]));
+        System.out.println(rob(new int[]{2, 3, 2}));
         System.out.println(rob(new int[]{1, 2, 3, 1}));
-        System.out.println(rob(new int[]{2, 7, 9, 3, 1, 10}));
+    }
+
+    private int rob(int[] nums) {
+        if (nums.length == 0) return 0;
+        if (nums.length == 1) return nums[0];
+        int[] arr1 = new int[nums.length - 1];
+        int[] arr2 = new int[nums.length - 1];
+        System.arraycopy(nums, 0, arr1, 0, nums.length - 1);
+        System.arraycopy(nums, 1, arr2, 0, nums.length - 1);
+        int a = rob0(arr1);
+        int b = rob0(arr2);
+        return Math.max(a, b);
     }
 
     @SuppressWarnings("all")
-    private int rob(int[] nums) {
+    private int rob0(int[] nums) {
         int length = nums.length;
         if (length == 0) return 0;
         if (length == 1) return nums[0];
