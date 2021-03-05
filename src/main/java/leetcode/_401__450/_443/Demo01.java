@@ -19,11 +19,8 @@ public class Demo01 {
         int res = 0;
         int offset = chars.length - 1;
         for (int i = chars.length - 2; i >= -1; i--) {
-
             char x = i == -1 ? ' ' : chars[i];
-            if (x == c) {
-                count++;
-            }
+            if (x == c) count++;
             if (x != c || i == -1) {
                 if (count > 1) {
                     String s = String.valueOf(count);
@@ -34,12 +31,9 @@ public class Demo01 {
                         chars[o] = a;
                         o++;
                     }
-                    for (int j = o, t = o + chars.length - offset; j < t && t < chars.length; j++) {
+                    for (int j = o, t = o + chars.length - offset; j < t && t < chars.length; j++)
                         chars[j] = chars[offset++];
-                    }
-                } else {
-                    res += 1;
-                }
+                } else res += 1;
                 c = x;
                 count = 1;
                 offset = i + 1;
