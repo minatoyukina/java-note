@@ -1,6 +1,6 @@
 package leetcode._601__650._617;
 
-import leetcode._50__100._100.TreeNode;
+import leetcode._51__100._100.TreeNode;
 import org.junit.Test;
 
 public class Demo01 {

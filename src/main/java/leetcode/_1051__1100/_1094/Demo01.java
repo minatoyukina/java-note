@@ -2,6 +2,9 @@ package leetcode._1051__1100._1094;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class Demo01 {
 
 
@@ -14,8 +17,11 @@ public class Demo01 {
     }
 
     private boolean carPooling(int[][] trips, int capacity) {
+        Arrays.sort(trips, Comparator.comparingInt(x -> x[1]));
         int max = 0;
-        for (int[] trip : trips) max = Math.max(trip[2], max);
+        for (int[] trip : trips) {
+            max = Math.max(trip[2], max);
+        }
         int seated = 0;
         for (int i = 0; i <= max; i++) {
             for (int[] trip : trips) {

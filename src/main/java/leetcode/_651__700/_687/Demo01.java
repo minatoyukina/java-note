@@ -1,7 +1,7 @@
 package leetcode._651__700._687;
 
 import javafx.util.Pair;
-import leetcode._50__100._100.TreeNode;
+import leetcode._51__100._100.TreeNode;
 import leetcode.util.Common;
 import org.junit.Test;
 
