@@ -32,7 +32,7 @@ public class Demo01 {
             int x = c1[i] + c2[i] - 96 + (ceiling ? 1 : 0);
             if (x >= 10) {
                 ceiling = true;
-                c1[i] = String.valueOf(x).charAt(1);
+                c1[i] = (char) (x + 38);
             } else {
                 ceiling = false;
                 c1[i] = (char) (x + 48);
