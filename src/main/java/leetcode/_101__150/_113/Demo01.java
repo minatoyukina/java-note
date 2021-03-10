@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Demo01 {
 
@@ -20,20 +19,21 @@ public class Demo01 {
 
     private List<List<Integer>> pathSum(TreeNode root, int sum) {
         List<List<Integer>> list = new ArrayList<>();
-        dfs(list, root, new ArrayList<>());
-        System.out.println(list);
-        return list.stream()
-                .filter(s -> s.stream().reduce(Integer::sum).orElse(sum - 1) == sum)
-                .collect(Collectors.toList());
+        dfs(list, new ArrayList<>(), root, 0, sum);
+        return list;
     }
 
-    private void dfs(List<List<Integer>> list, TreeNode root, List<Integer> key) {
+    private void dfs(List<List<Integer>> list, List<Integer> sub, TreeNode root, int sum, int target) {
         if (root != null) {
-            list.remove(key);
-            key.add(root.val);
-            list.add(key);
-            dfs(list, root.left, new ArrayList<>(key));
-            dfs(list, root.right, new ArrayList<>(key));
+            if (root.left == null && root.right == null && root.val + sum == target) {
+                sub.add(root.val);
+                list.add(sub);
+            } else {
+                sub.add(root.val);
+                sum += root.val;
+                dfs(list, new ArrayList<>(sub), root.left, sum, target);
+                dfs(list, new ArrayList<>(sub), root.right, sum, target);
+            }
         }
     }
 }
