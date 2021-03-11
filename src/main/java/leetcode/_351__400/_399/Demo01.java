@@ -35,77 +35,50 @@ public class Demo01 {
                         Lists.newArrayList("b", "a"),
                         Lists.newArrayList("a", "e"),
                         Lists.newArrayList("a", "a"),
-                        Lists.newArrayList("x", "x")
+                        Lists.newArrayList("x", "a")
                 )
         )));
     }
 
-    private double[] div;
-    private double[] values;
 
     private double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
-        this.values = values;
-        Set<String> set = new TreeSet<>();
-        for (List<String> equation : equations) {
-            set.addAll(equation);
-        }
-        List<String> list = new ArrayList<>(set);
-        int[] parent = new int[set.size()];
-        div = new double[set.size()];
-        for (int i = 0; i < set.size(); i++) {
-            parent[i] = i;
-            div[i] = 1;
-        }
+        Map<String, Map<String, Double>> map = new HashMap<>();
         for (int i = 0; i < equations.size(); i++) {
             List<String> equation = equations.get(i);
-            String x = equation.get(0);
-            String y = equation.get(1);
-            if (x.compareTo(y) > 0) {
-                String tmp = x;
-                x = y;
-                y = tmp;
-                values[i] = 1 / values[i];
-            }
-            merge(parent, list.indexOf(x), list.indexOf(y));
+            String a = equation.get(0);
+            String b = equation.get(1);
+            Map<String, Double> sub1 = map.getOrDefault(a, new HashMap<>());
+            sub1.put(b, values[i]);
+            map.put(a, sub1);
+
+            Map<String, Double> sub2 = map.getOrDefault(b, new HashMap<>());
+            sub2.put(a, 1 / values[i]);
+            map.put(b, sub2);
+
         }
         double[] res = new double[queries.size()];
         for (int i = 0; i < queries.size(); i++) {
             List<String> query = queries.get(i);
-            String x = query.get(0);
-            String y = query.get(1);
-            if (x.compareTo(y) < 0) {
-                String tmp = x;
-                x = y;
-                y = tmp;
-            }
-            if (!set.contains(x) || !set.contains(y)) {
-                res[i] = -1;
-                continue;
-            }
-            int index = list.indexOf(x);
-            double v = div[index];
-            while (parent[index] != index) {
-                index = parent[index];
-                v /= div[index];
-            }
-            res[i] = v;
+            String a = query.get(0);
+            String b = query.get(1);
+            if (!map.containsKey(a) || !map.containsKey(b)) res[i] = -1;
+            else if (a.equals(b)) res[i] = 1;
+            else res[i] = dfs(map, a, b, 1, new HashSet<>());
         }
-
         return res;
     }
 
-    private int find(int[] arr, int x) {
-        if (arr[x] == x) return x;
-        else {
-            div[x] /= values[x];
-            return arr[x] = find(arr, arr[x]);
+    private double dfs(Map<String, Map<String, Double>> map, String src, String target, double relay, Set<String> memo) {
+        Map<String, Double> sub = map.get(src);
+        if (src.equals(target)) return relay;
+        if (sub == null) return -1;
+        for (Map.Entry<String, Double> entry : sub.entrySet()) {
+            if (!memo.contains(entry.getKey())) {
+                memo.add(entry.getKey());
+                double dfs = dfs(map, entry.getKey(), target, relay * entry.getValue(), memo);
+                if (dfs != -1) return dfs;
+            }
         }
-    }
-
-    private void merge(int arr[], int i, int j) {
-        int x = find(arr, i);
-        int y = find(arr, j);
-        if (x == y) return;
-        arr[y] = x;
+        return -1;
     }
 }
