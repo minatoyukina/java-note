@@ -18,7 +18,7 @@ public class Demo01 {
 
     private int[][] flipAndInvertImage(int[][] image) {
         for (int i = 0; i < image.length; i++) {
-            for (int j = 0; j < image[i].length / 2; j++) {
+            for (int j = 0; j < (image[i].length + 1) / 2; j++) {
                 int tmp = image[i][j];
                 image[i][j] = image[i][image.length - 1 - j] == 0 ? 1 : 0;
                 image[i][image.length - 1 - j] = tmp == 0 ? 1 : 0;
