@@ -25,29 +25,32 @@ public class Demo01 {
             set.add(prerequisite[1]);
             map.put(key, set);
         }
-        boolean[] dp = new boolean[numCourses];
+        int[] dp = new int[numCourses];
         for (int i = 0; i < numCourses; i++) {
-            if (!dfs(i, map, new HashSet<>(), dp)) return false;
+            if (ng(i, map, new HashSet<>(), dp)) return false;
         }
         return true;
     }
 
-    @SuppressWarnings("all")
-    private boolean dfs(int i, Map<Integer, Set<Integer>> map, Set<Integer> memo, boolean[] dp) {
+    private boolean ng(int i, Map<Integer, Set<Integer>> map, Set<Integer> memo, int[] dp) {
+        if (dp[i] == -1) return true;
         Set<Integer> set = map.get(i);
-        if (set == null || set.isEmpty() || dp[i]) {
-            dp[i] = true;
+        if (set == null || set.isEmpty() || dp[i] == 1) {
+            dp[i] = 1;
+            return false;
+        }
+        if (memo.contains(i)) {
+            dp[i] = -1;
             return true;
         }
-        if (memo.contains(i)) return false;
         memo.add(i);
         for (int s : set) {
-            if (!dfs(s, map, new HashSet<>(memo), dp)) {
-                return false;
+            if (ng(s, map, new HashSet<>(memo), dp)) {
+                return true;
             }
         }
-        dp[i] = true;
-        return true;
+        dp[i] = 1;
+        return false;
     }
 
 }
