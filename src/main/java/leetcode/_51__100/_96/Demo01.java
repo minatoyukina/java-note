@@ -11,9 +11,16 @@ public class Demo01 {
     }
 
     private int numTrees(int n) {
-        int[] dp = new int[Integer.MAX_VALUE];
+        int[] dp = new int[n + 1];
         dp[0] = 1;
-        dp[1] = 2;
+        for (int i = 1; i <= n; i++) {
+            int sum = 0;
+            for (int j = 1; j <= i; j++) {
+                sum += dp[j - 1] * dp[i - j];
+            }
+            dp[i] = sum;
+
+        }
         return dp[n];
     }
 
