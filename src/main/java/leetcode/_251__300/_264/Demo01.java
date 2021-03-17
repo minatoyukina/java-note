@@ -23,7 +23,6 @@ public class Demo01 {
                     if (dp[j] * (long) a > dp[i - 1]) {
                         min = Math.min(min, dp[j] * (long) a);
                     }
-
                 }
             }
             dp[i] = (int) min;
