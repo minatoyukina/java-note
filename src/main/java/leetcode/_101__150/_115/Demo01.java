@@ -3,61 +3,44 @@ package leetcode._101__150._115;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.TreeMap;
+import java.util.Map;
 
 public class Demo01 {
 
     @Test
     public void test() {
-        MinStack stack = new MinStack();
-        stack.push(1);
-        stack.push(1);
-        stack.push(0);
-        stack.push(0);
-        stack.push(2);
-        stack.push(3);
-        stack.pop();
-        System.out.println(stack.top());
-        System.out.println(stack.getMin());
+        System.out.println(numDistinct("rabbbit", "rabbit"));
+        System.out.println(numDistinct("babgbag", "bag"));
 
     }
 
-    class MinStack {
+    private int count;
 
-        private List<Integer> list = new ArrayList<>();
-        private TreeMap<Integer, Integer> map = new TreeMap<>();
-
-        MinStack() {
-
+    private int numDistinct(String s, String t) {
+        count = 0;
+        char[] chars = s.toCharArray();
+        Map<Character, List<Integer>> map = new HashMap<>();
+        for (int i = 0; i < chars.length; i++) {
+            List<Integer> list = map.getOrDefault(chars[i], new ArrayList<>());
+            list.add(i);
+            map.put(chars[i], list);
         }
+        dfs(map, t, t.length() - 1, s.length());
+        return count;
+    }
 
-        void push(int x) {
-            list.add(x);
-            if (map.containsKey(x)) map.put(x, map.get(x) + 1);
-            else map.put(x, 1);
+    private void dfs(Map<Character, List<Integer>> map, String s, int index, int offset) {
+        if (index < 0) {
+            count++;
+            return;
         }
-
-        void pop() {
-            if (!list.isEmpty()) {
-                int last = list.size() - 1;
-                Integer integer = list.get(last);
-                if (map.containsKey(integer)) {
-                    Integer count = map.get(integer);
-                    if (count == 1) map.remove(integer);
-                    else map.put(integer, count - 1);
-                }
-                list.remove(last);
-            }
-        }
-
-        int top() {
-            if (list.size() > 0) return list.get(list.size() - 1);
-            return 0;
-        }
-
-        int getMin() {
-            return map.firstKey();
+        List<Integer> list = map.get(s.charAt(index));
+        if (list == null) return;
+        for (int i : list) {
+            if (i < offset)
+                dfs(map, s, index - 1, i);
         }
     }
 }
