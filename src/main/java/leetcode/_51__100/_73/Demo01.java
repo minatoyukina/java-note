@@ -3,6 +3,8 @@ package leetcode._51__100._73;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Demo01 {
 
@@ -20,41 +22,23 @@ public class Demo01 {
     }
 
     private void setZeroes(int[][] matrix) {
-        int a = Integer.MIN_VALUE, b = Integer.MAX_VALUE;
+        Set<Integer> set = new HashSet<>();
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
                 if (matrix[i][j] == 0) {
-                    for (int x = 0; x < i; x++) {
-                        matrix[x][j] = 0;
+                    for (int x = 0; x < matrix[i].length; x++) {
+                        if (matrix[i][x] == 0) set.add(x);
+                        matrix[i][x] = 0;
                     }
-                    for (int y = 0; y < j; y++) {
-                        matrix[i][y] = 0;
-                    }
-                    if (i < matrix.length - 1) {
-                        if (matrix[i + 1][j] != 0) {
-                            matrix[i + 1][j] = a;
-                        }
-                    }
-                    if (j < matrix[i].length - 1) {
-                        if (matrix[i][j + 1] != 0) {
-                            matrix[i][j + 1] = b;
-                        }
-                    }
+                    break;
                 }
-                if (matrix[i][j] == a) {
-                    matrix[i][j] = 0;
-                    if (i < matrix.length - 1 && matrix[i + 1][j] != 0) {
-                        matrix[i + 1][j] = a;
-                    }
+            }
+        }
+        for (int i = 0; i < matrix[0].length; i++) {
+            if (set.contains(i)) {
+                for (int j = 0; j < matrix.length; j++) {
+                    matrix[j][i] = 0;
                 }
-                if (matrix[i][j] == b) {
-                    matrix[i][j] = 0;
-                    if (j < matrix[i].length - 1 && matrix[i][j + 1] != 0) {
-                        matrix[i][j + 1] = b;
-                    }
-                }
-
-
             }
         }
     }

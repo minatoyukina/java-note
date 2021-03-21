@@ -33,15 +33,6 @@ public class Demo01 {
     }
 
     private char[][] dfs(char[][] board) {
-        boolean flag = true;
-        for (char[] chars : board) {
-            for (char c : chars) {
-                if (c == '.') {
-                    flag = false;
-                }
-            }
-        }
-        if (flag) return board;
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
                 if (board[x][y] == '.') {
@@ -67,7 +58,16 @@ public class Demo01 {
                             System.arraycopy(board[i], 0, clone[i], 0, 9);
                         }
                         clone[x][y] = character;
-                        dfs(clone);
+                        char[][] dfs = dfs(clone);
+                        boolean flag = true;
+                        for (char[] chars : dfs) {
+                            for (char c : chars) {
+                                if (c == '.') {
+                                    flag = false;
+                                }
+                            }
+                        }
+                        if (flag) return dfs;
                     }
                 }
             }
