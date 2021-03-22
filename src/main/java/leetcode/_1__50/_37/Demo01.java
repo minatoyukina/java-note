@@ -33,15 +33,6 @@ public class Demo01 {
     }
 
     private char[][] dfs(char[][] board) {
-        boolean flag = true;
-        for (char[] chars : board) {
-            for (char c : chars) {
-                if (c == '.') {
-                    flag = false;
-                }
-            }
-        }
-        if (flag) return board;
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
                 if (board[x][y] == '.') {
@@ -53,22 +44,28 @@ public class Demo01 {
                         set.remove(board[x][m]);
                         set.remove(board[m][y]);
                     }
-                    for (int i = 0; i < 3; i++) {
-                        for (int a = x / 3 * i; a < x / 3 * i + 3; a++) {
-                            for (int b = y / 3 * i; b < y / 3 * i + 3; b++) {
-                                set.remove(board[a][b]);
-                            }
+                    for (int a = x / 3 * 3; a < x / 3 * 3 + 3; a++) {
+                        for (int b = y / 3 * 3; b < y / 3 * 3 + 3; b++) {
+                            set.remove(board[a][b]);
                         }
                     }
                     if (set.isEmpty()) return board;
+                    label:
                     for (Character character : set) {
                         char[][] clone = new char[9][9];
                         for (int i = 0; i < 9; i++) {
                             System.arraycopy(board[i], 0, clone[i], 0, 9);
                         }
                         clone[x][y] = character;
-                        dfs(clone);
+                        char[][] dfs = dfs(clone);
+                        for (char[] chars : dfs) {
+                            for (char c : chars) {
+                                if (c == '.') continue label;
+                            }
+                        }
+                        return dfs;
                     }
+                    return board;
                 }
             }
         }
