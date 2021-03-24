@@ -18,6 +18,7 @@ public class Demo01 {
             dp[i] = heights[i];
             for (int j = i + 1; j < heights.length; j++) {
                 dp[i] = Math.min(dp[i], heights[j]);
+                if (dp[i] * heights.length - i < ans) break;
                 ans = Math.max(ans, (j - i + 1) * dp[i]);
             }
         }
