@@ -17,19 +17,18 @@ public class Demo01 {
         StringBuilder sb = new StringBuilder();
         List<Integer> list = new ArrayList<>();
         for (int i = 1; i <= n; i++) list.add(i);
-        while (n != 0) {
-            int helper = helper(n - 1);
-            int i = k % helper == 0 ? k / helper : k / helper + 1;
-            int s = list.get(i - 1);
-            sb.append(s);
+        while (n > 0) {
+            int fac = fac(n - 1);
+            int i = k % fac == 0 ? k / fac : k / fac + 1;
+            sb.append(list.get(i - 1));
             list.remove(i - 1);
-            k -= helper * (i - 1);
+            k -= fac * (i - 1);
             n -= 1;
         }
         return sb.toString();
     }
 
-    private int helper(int n) {
+    private int fac(int n) {
         int res = 1;
         for (int i = 1; i <= n; i++) res *= i;
         return res;
