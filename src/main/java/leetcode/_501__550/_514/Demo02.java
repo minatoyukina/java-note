@@ -21,9 +21,7 @@ public class Demo02 {
                     dp[i][j] = Integer.MAX_VALUE;
                     for (int k = 0; k < y; k++) {
                         if (ring.charAt(k) == key.charAt(i)) {
-                            int step = Math.min(
-                                    Math.abs(j - k),
-                                    k < j ? (k + ring.length() - j) : (j + ring.length() - k));
+                            int step = Math.min(Math.abs(j - k), y - Math.abs(j - k));
                             dp[i][j] = Math.min(dp[i][j], dp[i + 1][k] + step + 1);
                         }
                     }
