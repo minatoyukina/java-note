@@ -33,10 +33,7 @@ public class Demo01 {
         }
 
         public void push(int x) {
-            if (offset == arr.length) {
-                return;
-            }
-            arr[offset++] = x;
+            if (offset != arr.length) arr[offset++] = x;
         }
 
         public int pop() {
