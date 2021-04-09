@@ -41,7 +41,6 @@ public class Demo01 {
     }
 
     private int findInMountainArray(int target, MountainArray mountainArr) {
-        if (mountainArr == null) return -1;
         return dfs(target, mountainArr, 0, mountainArr.length() - 1);
 
     }
@@ -68,8 +67,8 @@ public class Demo01 {
                 return dfs(target, arr, mid, right);
             } else if (pivot < target) return dfs(target, arr, left, mid);
             else {
-                int l = dfs(target, arr, left, mid);
-                if (l != -1) return l;
+                int min = dfs(target, arr, left, mid);
+                if (min != -1) return min;
                 return mid;
             }
         }
