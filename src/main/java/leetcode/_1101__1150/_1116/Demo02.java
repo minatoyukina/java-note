@@ -2,14 +2,15 @@ package leetcode._1101__1150._1116;
 
 import org.junit.Test;
 
+import java.util.concurrent.Semaphore;
 import java.util.function.IntConsumer;
 
-public class Demo01 {
+public class Demo02 {
 
 
     @Test
     public void test() throws InterruptedException {
-        ZeroEvenOdd test = new ZeroEvenOdd(51);
+        ZeroEvenOdd test = new ZeroEvenOdd(5);
         Thread t1 = new Thread(() -> {
             try {
                 test.even(System.out::print);
@@ -41,49 +42,43 @@ public class Demo01 {
 
     @SuppressWarnings("all")
     class ZeroEvenOdd {
+
         private int n;
-        private final Object object = new Object();
-        private int i = 0;
-        private boolean b = true;
+        private Semaphore zS = new Semaphore(1);
+        private Semaphore eS = new Semaphore(0);
+        private Semaphore oS = new Semaphore(0);
 
         public ZeroEvenOdd(int n) {
             this.n = n;
         }
 
         public void zero(IntConsumer printNumber) throws InterruptedException {
-            while (i < n) {
-                synchronized (object) {
-                    if (i < n && b) {
-                        printNumber.accept(0);
-                        b = false;
-                        object.notifyAll();
-                    } else object.wait();
+            for (int j = 1; j <= n; j++) {
+                zS.acquire();
+                printNumber.accept(0);
+                if (j % 2 == 0) {
+                    eS.release();
+                } else {
+                    oS.release();
                 }
+
             }
 
         }
 
         public void even(IntConsumer printNumber) throws InterruptedException {
-            while (i < n) {
-                synchronized (object) {
-                    if (i < n && !b && i % 2 == 1) {
-                        printNumber.accept(++i);
-                        b = true;
-                        object.notifyAll();
-                    } else object.wait();
-                }
+            for (int j = 2; j <= n; j = j + 2) {
+                eS.acquire();
+                printNumber.accept(j);
+                zS.release();
             }
         }
 
         public void odd(IntConsumer printNumber) throws InterruptedException {
-            while (i < n) {
-                synchronized (object) {
-                    if (i < n && !b && i % 2 == 0) {
-                        printNumber.accept(++i);
-                        b = true;
-                        object.notifyAll();
-                    } else object.wait();
-                }
+            for (int j = 1; j <= n; j = j + 2) {
+                oS.acquire();
+                printNumber.accept(j);
+                zS.release();
             }
         }
     }
