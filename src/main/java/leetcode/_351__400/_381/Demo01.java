@@ -60,15 +60,20 @@ public class Demo01 {
         public boolean remove(int val) {
             Deque<Integer> pre = map.get(val);
             if (pre != null && pre.size() >= 1) {
-                Integer index = pre.pollFirst();
-                if (index == null) return false;
                 Integer last = list.get(--length);
                 if (val == last) {
+                    pre.pollLast();
                     return true;
                 }
+                Integer index = pre.pollFirst();
+                if (index == null) return false;
                 Deque<Integer> deque = map.get(last);
                 deque.pollLast();
-                deque.offerFirst(index);
+                if (deque.isEmpty()) deque.offerFirst(index);
+                else {
+                    if (deque.peekLast() > index) deque.offerFirst(index);
+                    else deque.offerLast(index);
+                }
                 list.set(index, last);
                 return true;
             }
