@@ -7,17 +7,18 @@ public class Demo01 {
 
     @Test
     public void test() {
+        System.out.println(countDigitOne(20));
         System.out.println(countDigitOne(13));
-        System.out.println(countDigitOne(0));
     }
 
     private int countDigitOne(int n) {
-        int ans = 0;
-        for (int i = 1; i <= n; i++) {
-            String s = i + "";
-            for (int j = 0; j < s.length(); j++) {
-                if (s.charAt(j) == '1') ans++;
-            }
+        int ans = 0, pre = 0;
+        while (n > 0) {
+            int remain = n % 10;
+            ans = pre + 1 + 2 * ans;
+            n /= 10;
+            pre += pre == 0 ? remain : 10 * remain;
+            if (pre == 0) pre = -1;
         }
         return ans;
     }
