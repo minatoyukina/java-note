@@ -12,15 +12,15 @@ public class Demo01 {
     }
 
     private int countDigitOne(int n) {
-        int ans = 0, pre = 0;
-        while (n > 0) {
-            int remain = n % 10;
-            ans = pre + 1 + 2 * ans;
-            n /= 10;
-            pre += pre == 0 ? remain : 10 * remain;
-            if (pre == 0) pre = -1;
+        int num = n, i = 1, s = 0;
+        while (num > 0) {
+            if (num % 10 == 0) s += (num / 10) * i;
+            if (num % 10 == 1) s += (num / 10) * i + (n % i) + 1;
+            if (num % 10 > 1) s += (int) Math.ceil(num / 10.0) * i;
+            num /= 10;
+            i *= 10;
         }
-        return ans;
+        return s;
     }
 
 }
