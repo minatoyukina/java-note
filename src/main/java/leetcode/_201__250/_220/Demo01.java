@@ -18,9 +18,7 @@ public class Demo01 {
             Long ceiling = set.ceiling((long) nums[i] - t);
             if (ceiling != null && ceiling <= (long) nums[i] + t) return true;
             set.add((long) nums[i]);
-            if (i > k) {
-                set.remove((long) nums[i - k]);
-            }
+            if (i >= k) set.remove((long) nums[i - k]);
         }
         return false;
     }
