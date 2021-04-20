@@ -22,28 +22,28 @@ public class Demo_0205 {
             l1 = l2;
             l2 = tmp;
         }
-        int add = 0;
-        ListNode t1 = l1;
+        int carry = 0;
+        ListNode ans = l1;
         while (l1 != null) {
             if (l2 != null) {
-                l1.val += l2.val + add;
+                l1.val += l2.val + carry;
                 if (l1.val >= 10) {
                     l1.val -= 10;
-                    add = 1;
-                } else add = 0;
+                    carry = 1;
+                } else carry = 0;
                 l2 = l2.next;
             } else {
-                l1.val += add;
+                l1.val += carry;
                 if (l1.val >= 10) l1.val -= 10;
-                else add = 0;
+                else carry = 0;
             }
-            if (l1.next == null && add == 1) {
+            if (l1.next == null && carry == 1) {
                 l1.next = new ListNode(1);
-                return t1;
+                return ans;
             }
             l1 = l1.next;
         }
-        return t1;
+        return ans;
     }
 
     private int length(ListNode node) {
