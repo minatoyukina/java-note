@@ -33,13 +33,9 @@ public class Demo_0305 {
         }
 
         public void push(int val) {
-            while (!stack.isEmpty() && stack.peek() < val) {
-                back.push(stack.pop());
-            }
+            while (!stack.isEmpty() && stack.peek() < val) back.push(stack.pop());
             stack.push(val);
-            while (!back.isEmpty()) {
-                stack.push(back.pop());
-            }
+            while (!back.isEmpty()) stack.push(back.pop());
         }
 
         public void pop() {
