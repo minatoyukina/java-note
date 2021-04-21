@@ -35,7 +35,6 @@ public class Demo_0813 {
             if (box[index][0] > ints[0] && box[index][1] > ints[1] && box[index][2] > ints[2])
                 max = Math.max(max, dfs(box, i));
         }
-        dp[index] = box[index][2] + max;
-        return box[index][2] + max;
+        return dp[index] = box[index][2] + max;
     }
 }
