@@ -31,12 +31,7 @@ public class Demo_0207 {
             l2++;
             t2 = t2.next;
         }
-        if (l2 > l1) {
-            ListNode tmp = headA;
-            headA = headB;
-            headB = tmp;
-        }
-        ListNode t3 = headA, t4 = headB;
+        ListNode t3 = l2 > l1 ? headB : headA, t4 = l2 > l1 ? headA : headB;
         for (int i = 0; i < Math.abs(l2 - l1); i++) t3 = t3.next;
         while (t3 != null) {
             if (t3 == t4) return t3;
