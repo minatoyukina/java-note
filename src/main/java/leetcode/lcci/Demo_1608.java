@@ -23,7 +23,7 @@ public class Demo_1608 {
         String[] dic2 = {"Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
         String[] dic3 = {"", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
         String[] dic4 = {"", "Thousand", "Million", "Billion"};
-        int n = s.length() / 3 - (s.length() % 3 == 0 ? 1 : 0);
+        int n = (s.length() - 1) / 3;
         int last = s.length(), pre = last - 3;
         StringBuilder ans = new StringBuilder();
         for (int i = 0; i <= n; i++) {
