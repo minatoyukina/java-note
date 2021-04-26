@@ -33,16 +33,13 @@ public class Demo_0306 {
         }
 
         public void enqueue(int[] animal) {
-            if (animal[1] == 0) {
-                cat.offer(animal[0]);
-            } else {
-                dog.offer(animal[0]);
-            }
+            if (animal[1] == 0) cat.offer(animal[0]);
+            else dog.offer(animal[0]);
         }
 
         public int[] dequeueAny() {
             if (!dog.isEmpty() && !cat.isEmpty()) {
-                if (dog.peek() > cat.peek()) return new int[]{dog.poll(), 1};
+                if (dog.peek() < cat.peek()) return new int[]{dog.poll(), 1};
                 else return new int[]{cat.poll(), 0};
             }
             if (!dog.isEmpty()) return new int[]{dog.poll(), 1};
@@ -51,16 +48,12 @@ public class Demo_0306 {
         }
 
         public int[] dequeueDog() {
-            if (dog.isEmpty()) {
-                return new int[]{-1, -1};
-            }
+            if (dog.isEmpty()) return new int[]{-1, -1};
             return new int[]{dog.poll(), 1};
         }
 
         public int[] dequeueCat() {
-            if (cat.isEmpty()) {
-                return new int[]{-1, -1};
-            }
+            if (cat.isEmpty()) return new int[]{-1, -1};
             return new int[]{cat.poll(), 0};
         }
     }
