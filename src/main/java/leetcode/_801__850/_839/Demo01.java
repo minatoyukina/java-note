@@ -41,10 +41,9 @@ public class Demo01 {
     }
 
     private void union(int[] arr, int x, int y) {
-        // 错误示范
-        // int a = find(arr, x);
-        // arr[y] = a;
-        arr[find(arr, y)] = find(arr, x);
+        int a = find(arr, x);
+        int b = find(arr, y);
+        arr[b] = a;
     }
 
 }

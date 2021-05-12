@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-public class Demo01 {
+public class Demo02 {
 
 
     @Test
@@ -14,11 +14,9 @@ public class Demo01 {
 
     private int[] xorQueries(int[] arr, int[][] queries) {
         int[] ans = new int[queries.length];
-        for (int i = 0; i < queries.length; i++) {
-            for (int j = queries[i][0]; j <= queries[i][1]; j++) {
-                ans[i] ^= arr[j];
-            }
-        }
+        int[] pre = new int[arr.length + 1];
+        for (int i = 0; i < arr.length; i++) pre[i + 1] = pre[i] ^ arr[i];
+        for (int i = 0; i < queries.length; i++) ans[i] = pre[queries[i][1] + 1] ^ pre[queries[i][0]];
         return ans;
     }
 
