@@ -40,12 +40,12 @@ public class Demo_1713 {
         if (index >= s.length()) return dp[index] = 0;
         int l = s.length() - index;
         if (l < min) return dp[index] = l;
-        int ans = s.length();
+        int ans = 1 + dfs(dic, s, index + 1, min, max);
         for (int i = index + min; i <= Math.min(s.length(), index + max); i++) {
             if (dic.contains(s.substring(index, i))) {
                 ans = Math.min(ans, dfs(dic, s, i, min, max));
             }
         }
-        return dp[index] = Math.min(ans, 1 + dfs(dic, s, index + 1, min, max));
+        return dp[index] = ans;
     }
 }
