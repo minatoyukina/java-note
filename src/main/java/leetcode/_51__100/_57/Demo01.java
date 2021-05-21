@@ -21,11 +21,9 @@ public class Demo01 {
         int left = 0, right = intervals.length - 1;
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            if (newInterval[0] > intervals[mid][1]) {
-                left = mid + 1;
-            } else if (newInterval[1] < intervals[mid][0]) {
-                right = mid - 1;
-            } else {
+            if (newInterval[0] > intervals[mid][1]) left = mid + 1;
+            else if (newInterval[1] < intervals[mid][0]) right = mid - 1;
+            else {
                 int x = mid, y = mid;
                 while (x >= 0 && over(newInterval, intervals[x])) x--;
                 while (y < intervals.length && over(newInterval, intervals[y])) y++;
