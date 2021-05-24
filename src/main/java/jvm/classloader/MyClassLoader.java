@@ -73,9 +73,9 @@ public class MyClassLoader extends ClassLoader {
 
         MyClassLoader loader1 = new MyClassLoader("C:/Users/chenchuanqi/桌面");
         MyClassLoader loader2 = new MyClassLoader("C:/Users/chenchuanqi/桌面");
-        Class<?> c1 = loader1.loadClass("Test");
-        Class<?> c2 = loader1.loadClass("Test");
-        Class<?> c3 = loader2.loadClass("Test");
+        Class<?> c1 = loader1.loadClass("Race");
+        Class<?> c2 = loader1.loadClass("Race");
+        Class<?> c3 = loader2.loadClass("Race");
 
         Class<?> cString = loader2.loadClass("java.lang.Integer");
         Class<?> cMyClassLoaderTest = loader2.loadClass("jvm.classloader.MyClassLoader");
