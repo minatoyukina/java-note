@@ -4,12 +4,12 @@ import java.text.ParseException;
 import java.util.Arrays;
 import java.util.EmptyStackException;
 
-public class Stack {
+class Stack {
     private Object[] elements;
     private int size = 0;
     private static final int DEFAULT_INITIAL_CAPACITY = 5;
 
-    public Stack() {
+    private Stack() {
         elements = new Object[DEFAULT_INITIAL_CAPACITY];
     }
 

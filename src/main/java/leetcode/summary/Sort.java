@@ -15,8 +15,10 @@ public class Sort {
         System.out.println(Arrays.toString(bubbleSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
         System.out.println(Arrays.toString(selectSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
         System.out.println(Arrays.toString(insertSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
+        System.out.println(Arrays.toString(shellSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
         System.out.println(Arrays.toString(quickSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
         System.out.println(Arrays.toString(mergeSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
+        System.out.println(Arrays.toString(heapSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
     }
 
     private int[] bubbleSort(int[] arr) {
@@ -56,6 +58,22 @@ public class Sort {
                 j--;
             }
             if (i != j) arr[j] = tmp;
+        }
+        return arr;
+    }
+
+    private int[] shellSort(int[] arr) {
+        int len = arr.length;
+        for (int step = len / 2; step > 0; step /= 2) {
+            for (int i = step; i < len; i++) {
+                int tmp = arr[i];
+                int j = i - step;
+                while (j >= 0 && arr[j] > tmp) {
+                    arr[j + step] = arr[j];
+                    j -= step;
+                }
+                arr[j + step] = tmp;
+            }
         }
         return arr;
     }
@@ -103,5 +121,37 @@ public class Sort {
         while (start1 <= mid) res[k++] = arr[start1++];
         while (start2 <= end) res[k++] = arr[start2++];
         for (int i = start; i <= end; i++) arr[i] = res[i];
+    }
+
+    private int[] heapSort(int[] arr) {
+        int len = arr.length;
+        buildMaxHeap(arr, len);
+        for (int i = len - 1; i >= 0; i--) {
+            int tmp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = tmp;
+            heapify(arr, 0, --len);
+        }
+        return arr;
+    }
+
+    private void buildMaxHeap(int[] arr, int len) {
+        for (int i = (int) Math.floor(len / 2); i >= 0; i--) {
+            heapify(arr, i, len);
+        }
+    }
+
+    private void heapify(int[] arr, int i, int len) {
+        int left = 2 * i + 1;
+        int right = left + 1;
+        int max = i;
+        if (left < len && arr[left] > arr[max]) max = left;
+        if (right < len && arr[right] > arr[max]) max = right;
+        if (max != i) {
+            int tmp = arr[i];
+            arr[i] = arr[max];
+            arr[max] = tmp;
+            heapify(arr, max, len);
+        }
     }
 }
