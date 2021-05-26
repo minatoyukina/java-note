@@ -150,6 +150,7 @@ public class BinaryTree {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
+                assert node != null;
                 level.add(node.val);
                 if (node.left != null) queue.offer(node.left);
                 if (node.right != null) queue.offer(node.right);
