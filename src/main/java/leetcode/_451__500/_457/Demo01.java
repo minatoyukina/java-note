@@ -20,8 +20,7 @@ public class Demo01 {
     private boolean dfs(int[] nums, int index, int count) {
         if (count > nums.length) return true;
         int next = index + nums[index];
-        next %= nums.length;
-        if (next < 0) next += nums.length;
+        next = Math.floorMod(next, nums.length);
         if (nums[next] * nums[index] < 0 || index == next) return false;
         return dfs(nums, next, ++count);
     }
