@@ -9,6 +9,12 @@ public class Demo01 {
     public void test() {
         Skiplist skiplist = new Skiplist();
         skiplist.add(1);
+        skiplist.add(5);
+        skiplist.add(4);
+        skiplist.add(2);
+        skiplist.add(7);
+        skiplist.add(6);
+        skiplist.add(3);
         System.out.println(skiplist.search(1));
         System.out.println(skiplist.erase(2));
     }
