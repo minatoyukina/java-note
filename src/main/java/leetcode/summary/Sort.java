@@ -19,6 +19,7 @@ public class Sort {
         System.out.println(Arrays.toString(quickSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
         System.out.println(Arrays.toString(mergeSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
         System.out.println(Arrays.toString(heapSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
+        System.out.println(Arrays.toString(countingSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
     }
 
     private int[] bubbleSort(int[] arr) {
@@ -57,7 +58,7 @@ public class Sort {
                 arr[j] = arr[j - 1];
                 j--;
             }
-            if (i != j) arr[j] = tmp;
+            arr[j] = tmp;
         }
         return arr;
     }
@@ -153,5 +154,24 @@ public class Sort {
             arr[max] = tmp;
             heapify(arr, max, len);
         }
+    }
+
+    private int[] countingSort(int[] arr) {
+        int max = arr[0];
+        for (int i : arr) max = Math.max(max, i);
+        int[] bucket = new int[max + 1];
+        for (int i : arr) bucket[i]++;
+        int index = 0;
+        for (int i = 0; i <= max; i++) {
+            while (bucket[i] > 0) {
+                arr[index++] = i;
+                bucket[i]--;
+            }
+        }
+        return arr;
+    }
+
+    private int[] bucketSort(int[] arr){
+        return arr;
     }
 }
