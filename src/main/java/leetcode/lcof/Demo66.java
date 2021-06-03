@@ -23,7 +23,7 @@ public class Demo66 {
             right[i + 1] = right[i] * a[a.length - 1 - i];
         }
         for (int i = 0; i < a.length; i++) {
-            ans[i] = left[i] * right[a.length - i];
+            ans[i] = left[i] * right[a.length - 1 - i];
         }
         return ans;
     }
