@@ -2,7 +2,7 @@ package leetcode.summary;
 
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * @author ccq
@@ -19,6 +19,9 @@ public class Sort {
         System.out.println(Arrays.toString(quickSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
         System.out.println(Arrays.toString(mergeSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
         System.out.println(Arrays.toString(heapSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
+        System.out.println(Arrays.toString(countingSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
+        System.out.println(Arrays.toString(bucketSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
+        System.out.println(Arrays.toString(radixSort(new int[]{4, 1, 3, 5, 2, 7, 6})));
     }
 
     private int[] bubbleSort(int[] arr) {
@@ -57,7 +60,7 @@ public class Sort {
                 arr[j] = arr[j - 1];
                 j--;
             }
-            if (i != j) arr[j] = tmp;
+            arr[j] = tmp;
         }
         return arr;
     }
@@ -153,5 +156,70 @@ public class Sort {
             arr[max] = tmp;
             heapify(arr, max, len);
         }
+    }
+
+    private int[] countingSort(int[] arr) {
+        int max = arr[0];
+        for (int i : arr) max = Math.max(max, i);
+        int[] bucket = new int[max + 1];
+        for (int i : arr) bucket[i]++;
+        int index = 0;
+        for (int i = 0; i <= max; i++) {
+            while (bucket[i] > 0) {
+                arr[index++] = i;
+                bucket[i]--;
+            }
+        }
+        return arr;
+    }
+
+    @SuppressWarnings("unchecked")
+    private int[] bucketSort(int[] arr) {
+        int max = arr[0], min = arr[0];
+        for (int i : arr) {
+            max = Math.max(max, i);
+            min = Math.min(min, i);
+        }
+        int d = max - min;
+        int bucketNum = 3;
+        List<Integer>[] bucketList = new List[bucketNum];
+        for (int i = 0; i < bucketNum; i++) bucketList[i] = new ArrayList<>();
+        for (int i : arr) {
+            int num = (i - min) * ((bucketNum - 1) / d);
+            bucketList[num].add(i);
+        }
+        int index = 0;
+        for (int i = 0; i < bucketNum; i++) {
+            Collections.sort(bucketList[i]);
+            for (int j : bucketList[i]) {
+                arr[index++] = j;
+            }
+        }
+        return arr;
+    }
+
+    @SuppressWarnings("all")
+    private int[] radixSort(int[] arr) {
+        int max = arr[0];
+        for (int i : arr) max = Math.max(max, i);
+        int maxDigit = 0;
+        for (int i = max; i != 0; i /= 10) maxDigit++;
+        if (maxDigit == 0) maxDigit = 1;
+        int mod = 10, dev = 1;
+        for (int i = 0; i < maxDigit; i++, dev *= 10, mod *= 10) {
+            Queue<Integer>[] counter = new Queue[mod * 2];
+            for (int num : arr) {
+                int bucket = ((num % mod) / dev) + mod;
+                if (counter[bucket] == null) counter[bucket] = new LinkedList<>();
+                counter[bucket].add(num);
+            }
+            int index = 0;
+            for (Queue<Integer> aCounter : counter) {
+                if (aCounter != null) {
+                    while (!aCounter.isEmpty()) arr[index++] = aCounter.poll();
+                }
+            }
+        }
+        return arr;
     }
 }
