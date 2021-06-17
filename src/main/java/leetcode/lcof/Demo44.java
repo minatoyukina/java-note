@@ -19,6 +19,6 @@ public class Demo44 {
         }
         int pre = (n - sum) / bit;
         int cur = (bit == 1 ? 0 : (int) Math.pow(10, bit - 1)) + pre;
-        return Integer.toString(cur).toCharArray()[(n - sum) % bit] - '0';
+        return Integer.toString(cur).charAt((n - sum) % bit) - '0';
     }
 }
