@@ -4,10 +4,8 @@ import leetcode._1__50._2.ListNode;
 import leetcode._51__100._100.TreeNode;
 import org.junit.Test;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Queue;
+import java.util.*;
+import java.util.stream.Collectors;
 
 final public class Common {
 
@@ -71,10 +69,17 @@ final public class Common {
         return result;
     }
 
+    public static List<List<String>> strToList(String s) {
+        String[] split = s.substring(2, s.length() - 2).replace("\"", "").split("],\\[");
+        return Arrays.stream(split).map(x -> Arrays.stream(x.split(","))
+                .collect(Collectors.toList())).collect(Collectors.toList());
+    }
+
 
     @Test
     public void test() {
         TreeNode treeNode = arrayToTree(1, 2, 3, null, 4, null, null, 5, 6);
         System.out.println(treeNode);
+        System.out.println(strToList("[[\"EZE\",\"AXA\"],[\"TIA\",\"ANU\"],[\"ANU\",\"JFK\"],[\"JFK\",\"ANU\"],[\"ANU\",\"EZE\"],[\"TIA\",\"ANU\"],[\"AXA\",\"TIA\"],[\"TIA\",\"JFK\"],[\"ANU\",\"TIA\"],[\"JFK\",\"TIA\"]]"));
     }
 }
