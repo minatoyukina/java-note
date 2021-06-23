@@ -2,37 +2,44 @@ package leetcode._451__500._474;
 
 import org.junit.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.IntStream;
+
 public class Demo01 {
 
 
     @Test
     public void test() {
-        System.out.println(findMaxForm(new String[]{"10", "0001", "111001", "1", "0"}, 5, 3));
-        System.out.println(findMaxForm(new String[]{"10", "1", "0"}, 1, 1));
-        System.out.println(findMaxForm(new String[]{"111", "1000", "1000", "1000"}, 9, 3));
-        System.out.println(findMaxForm(new String[]{"11111", "100", "1101", "1101", "11000"}, 5, 7));
+        System.out.println(makesquare(new int[]{5, 5, 5, 5, 16, 4, 4, 4, 4, 4, 3, 3, 3, 3, 4}));
+        System.out.println(makesquare(new int[]{1, 1, 2, 2, 2}));
     }
 
-    private int findMaxForm(String[] strs, int m, int n) {
-        int[][][] dp = new int[strs.length + 1][m + 1][n + 1];
-        for (int i = 1; i <= strs.length; i++) {
-            char[] chars = strs[i - 1].toCharArray();
-            int x = 0, y = 0;
-            for (char c : chars) {
-                if (c == '0') x++;
-                else y++;
-            }
-            for (int j = 0; j <= m; j++) {
-                for (int k = 0; k <= n; k++) {
-                    if (j - x >= 0 && k - y >= 0) {
-                        dp[i][j][k] = Math.max(dp[i - 1][j][k], dp[i - 1][j - x][k - y] + 1);
-                    } else {
-                        dp[i][j][k] = dp[i - 1][j][k];
-                    }
-                }
+    private boolean makesquare(int[] matchsticks) {
+        int sum = 0;
+        for (int i : matchsticks) sum += i;
+        if (matchsticks.length < 4 || sum % 4 != 0) return false;
+        matchsticks = IntStream.of(matchsticks).boxed().sorted((x, y) -> y - x).mapToInt(x -> x).toArray();
+        int l = sum / 4;
+        for (int i : matchsticks) if (i > l || (i < l && i + matchsticks[matchsticks.length - 1] > l)) return false;
+        return dfs(matchsticks, new HashSet<>(), 0, 0, l);
+    }
+
+    private boolean dfs(int[] arr, Set<Integer> visited, int count, int sum, int l) {
+        if (count > 4 || sum > l) return false;
+        if (sum == l) {
+            sum = 0;
+            count++;
+        }
+        if (visited.size() == arr.length && count == 4) return true;
+        for (int i = 0; i < arr.length; i++) {
+            if (!visited.contains(i)) {
+                visited.add(i);
+                if (dfs(arr, visited, count, sum + arr[i], l)) return true;
+                visited.remove(i);
             }
         }
-        return dp[strs.length][m][n];
+        return false;
     }
 
 }
