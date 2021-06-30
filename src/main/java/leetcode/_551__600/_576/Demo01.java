@@ -24,19 +24,19 @@ public class Demo01 {
     private static final int MOD = (int) (1e9 + 7);
     private int[][][] dp;
 
-    private int dfs(int m, int n, int maxMove, int row, int col) {
-        if (maxMove < 0) return 0;
-        if (maxMove < row && maxMove < col && maxMove < m - row && maxMove < n - col) return 0;
+    private int dfs(int m, int n, int move, int row, int col) {
+        if (move < 0) return 0;
+        if (move < row && move < col && move < m - row && move < n - col) return 0;
         if (row < 0 || col < 0 || row >= m || col >= n) return 1;
-        if (dp[row][col][maxMove] != -1) return dp[row][col][maxMove];
+        if (dp[row][col][move] != -1) return dp[row][col][move];
         int sum = 0;
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 if (i * j != 0 || (i == 0 && j == 0)) continue;
-                sum += dfs(m, n, maxMove - 1, row + i, col + j);
+                sum += dfs(m, n, move - 1, row + i, col + j);
                 sum %= MOD;
             }
         }
-        return dp[row][col][maxMove] = sum;
+        return dp[row][col][move] = sum;
     }
 }
