@@ -8,6 +8,9 @@ public class Demo01 {
     @Test
     public void test() {
         System.out.println(calculateMinimumHP(new int[][]{
+                {100},
+        }));
+        System.out.println(calculateMinimumHP(new int[][]{
                 {-2, -3, 3},
                 {-5, -10, 1},
                 {10, 30, -5},
@@ -19,18 +22,20 @@ public class Demo01 {
         int[][] dp = new int[m][n];
         for (int i = m - 1; i >= 0; i--) {
             for (int j = n - 1; j >= 0; j--) {
-                if (i == m - 1 && j == n - 1) dp[i][j] = dungeon[i][j] < 0 ? -dungeon[i][j] : 0;
+                if (i == m - 1 && j == n - 1) dp[i][j] = dungeon[i][j] <= 0 ? -dungeon[i][j] : 0;
                 else {
-                    for (int x = i + 1; x < m - 1; x++) {
-                        dp[i][j] = Math.min(dp[i][j], dp[x][j] + (dungeon[i][j] < 0 ? -dungeon[i][j] : 0));
-                    }
-                    for (int x = j + 1; x < n - 1; x++) {
-                        dp[i][j] = Math.min(dp[i][j], dp[i][x] + (dungeon[i][j] < 0 ? -dungeon[i][j] : 0));
+                    if (i == m - 1) dp[i][j] = dungeon[i][j] > dp[i][j + 1] ? 0 : (dp[i][j + 1] - dungeon[i][j]);
+                    else if (j == n - 1) dp[i][j] = dungeon[i][j] > dp[i + 1][j] ? 0 : (dp[i + 1][j] - dungeon[i][j]);
+                    else {
+                        int x = dungeon[i][j] > dp[i][j + 1] ? 0 : (dp[i][j + 1] - dungeon[i][j]);
+                        int y = dungeon[i][j] > dp[i + 1][j] ? 0 : (dp[i + 1][j] - dungeon[i][j]);
+                        dp[i][j] = Math.min(x, y);
                     }
                 }
+                if (dp[i][j] + dungeon[i][j] == 0) dp[i][j]++;
             }
         }
-        return dp[0][0];
+        return dp[0][0] == 0 ? 1 : dp[0][0];
     }
 
 }
