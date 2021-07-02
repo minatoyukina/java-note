@@ -16,17 +16,17 @@ public class Demo01 {
 
     // https://blog.csdn.net/qq_44786250/article/details/100056975
     private int maxSumRangeQuery(int[] nums, int[][] requests) {
-        int[] count = new int[nums.length];
+        int[] count = new int[nums.length + 1];
         for (int[] request : requests) {
             count[request[0]]++;
-            if (request[1] + 1 < nums.length) count[request[1] + 1]--;
+            count[request[1] + 1]--;
         }
         for (int i = 1; i < count.length; i++) count[i] += count[i - 1];
         Arrays.sort(count);
         Arrays.sort(nums);
         int sum = 0, mod = (int) 1e9 + 7;
         for (int i = nums.length - 1; i >= 0; i--) {
-            sum += (long) count[i] * nums[i] % mod;
+            sum += (long) count[i + 1] * nums[i] % mod;
             sum %= mod;
         }
         return sum;
