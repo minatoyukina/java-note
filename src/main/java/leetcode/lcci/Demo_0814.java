@@ -53,6 +53,6 @@ public class Demo_0814 {
     private int compute(int x, int y, char c) {
         if (c == '|') return x | y;
         if (c == '&') return x & y;
-        else return x ^ y;
+        return x ^ y;
     }
 }
