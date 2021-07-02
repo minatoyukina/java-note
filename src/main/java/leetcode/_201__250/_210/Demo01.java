@@ -8,8 +8,8 @@ public class Demo01 {
 
     @Test
     public void test() {
-        System.out.println(Arrays.toString(findOrder(7, new int[][]{
-                {1, 0}, {0, 3}, {0, 2}, {3, 2}, {2, 5}, {4, 5}, {5, 6}, {2, 4}})));
+        System.out.println(Arrays.toString(findOrder(3, new int[][]{{1, 0}, {0, 1}, {1, 2}})));
+        System.out.println(Arrays.toString(findOrder(7, new int[][]{{1, 0}, {0, 3}, {0, 2}, {3, 2}, {2, 5}, {4, 5}, {5, 6}, {2, 4}})));
         System.out.println(Arrays.toString(findOrder(3, new int[][]{{1, 0}})));
     }
 
@@ -21,34 +21,27 @@ public class Demo01 {
             list.add(ints[1]);
             map.put(ints[0], list);
         }
-        Set<Integer> dfs = dfs(numCourses, 0, map, new HashSet<>(), new HashSet<>());
-        if (dfs.size() == 0) return new int[0];
-        ArrayList<Integer> list = new ArrayList<>(dfs);
-        for (int i = 0; i < list.size(); i++) {
-            ans[i] = list.get(i);
-        }
+        List<Integer> list = new ArrayList<>();
+        dfs(numCourses, map, list, new boolean[numCourses]);
+        if (list.size() != numCourses) return new int[0];
+        for (int i = 0; i < list.size(); i++) ans[i] = list.get(i);
         return ans;
     }
 
-    private Set<Integer> dfs(int num, int index, Map<Integer, List<Integer>> map, Set<Integer> set, Set<Integer> memo) {
-        if (index >= num) {
-            if (set.size() == num) return set;
-            return dfs(num, 0, map, set, new HashSet<>());
-        }
-        List<Integer> list = map.get(index);
-        if (list == null || set.containsAll(list)) {
-            Set<Integer> copy = new LinkedHashSet<>(set);
-            copy.add(index);
-            return dfs(num, index + 1, map, copy, new HashSet<>());
-        } else {
-            for (Integer integer : list) {
-                if (!set.contains(integer) && !memo.contains(integer)) {
-                    memo.add(integer);
-                    Set<Integer> dfs = dfs(num, integer, map, set, memo);
-                    if (dfs.size() == num) return dfs;
-                }
+    private void dfs(int num, Map<Integer, List<Integer>> map, List<Integer> list, boolean[] visited) {
+        for (int i = 0; i < num; i++) {
+            List<Integer> v = map.getOrDefault(i, new ArrayList<>());
+            if (check(visited, v) && !visited[i]) {
+                list.add(i);
+                visited[i] = true;
+                dfs(num, map, list, visited);
+                if (list.size() == num) return;
             }
         }
-        return new HashSet<>();
+    }
+
+    private boolean check(boolean[] visited, List<Integer> list) {
+        for (Integer integer : list) if (!visited[integer]) return false;
+        return true;
     }
 }
