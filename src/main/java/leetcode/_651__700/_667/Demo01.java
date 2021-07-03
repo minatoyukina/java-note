@@ -9,5 +9,10 @@ public class Demo01 {
     public void test() {
 
     }
-    
+
+    private int[] constructArray(int n, int k) {
+        int[] ans = new int[n];
+        return ans;
+    }
+
 }
