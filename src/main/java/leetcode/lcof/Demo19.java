@@ -26,6 +26,7 @@ public class Demo19 {
 
     private boolean dfs(String s, String p, int si, int pi) {
         if (si < 0 && pi < 0) return true;
+        // 如果s匹配完p还剩下.*x*之类直接返回true
         if (si < 0 && pi % 2 == 1) if (check(p, pi)) return true;
         if (si < 0 || pi < 0) return false;
         if (dp[si][pi] != null) return dp[si][pi];
@@ -33,6 +34,7 @@ public class Demo19 {
         boolean ans = false;
         if (pc == '*') {
             char pre = p.charAt(pi - 1);
+            // .*匹配0~所有
             if (pre == '.') {
                 for (int i = -1; i <= si; i++) {
                     if (dfs(s, p, i, pi - 2)) {
@@ -40,9 +42,12 @@ public class Demo19 {
                         break;
                     }
                 }
+                // x*
             } else {
                 int x = si;
+                // x*匹配0个
                 if (dfs(s, p, x, pi - 2)) ans = true;
+                    // x*匹配s重复字符
                 else if (pre == sc) {
                     while (x >= 0 && s.charAt(x) == sc) {
                         if (dfs(s, p, x - 1, pi - 2)) {
