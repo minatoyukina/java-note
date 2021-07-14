@@ -9,7 +9,6 @@ public class Demo01 {
 
     @Test
     public void test() {
-        System.out.println(Integer.MAX_VALUE);
         System.out.println(minAbsoluteSumDiff(new int[]{1, 7, 5}, new int[]{2, 3, 5}));
     }
 
