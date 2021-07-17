@@ -25,14 +25,12 @@ public class Demo01 {
             } else {
                 if (left == -1) continue;
                 String s = paragraph.substring(left, i).toLowerCase();
-                if (!set.contains(s)) {
-                    map.put(s, map.getOrDefault(s, 0) + 1);
-                }
+                if (!set.contains(s)) map.put(s, map.getOrDefault(s, 0) + 1);
                 left = -1;
             }
         }
         int max = 0;
-        String ans = paragraph.toLowerCase();
+        String ans = null;
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
             if (entry.getValue() > max) {
                 ans = entry.getKey();
