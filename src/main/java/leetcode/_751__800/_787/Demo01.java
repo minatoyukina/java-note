@@ -19,28 +19,33 @@ public class Demo01 {
     }
 
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        if (n < 0) return -1;
         Map<Integer, Set<Pair<Integer, Integer>>> map = new HashMap<>();
         for (int[] flight : flights) {
             Set<Pair<Integer, Integer>> pairs = map.computeIfAbsent(flight[0], k1 -> new HashSet<>());
             pairs.add(new Pair<>(flight[1], flight[2]));
         }
-        Map<Integer, Integer> cost = new HashMap<>();
-        Queue<Integer> queue = new LinkedList<>();
-        queue.offer(src);
-        cost.put(src, 0);
+        Queue<Pair<Integer, Integer>> queue = new LinkedList<>();
+        Map<Integer, Integer> visited = new HashMap<>();
+        queue.offer(new Pair<>(src, 0));
+        visited.put(src, 0);
         int min = Integer.MAX_VALUE;
         while (!queue.isEmpty()) {
             if (k < 0) break;
             int size = queue.size();
             while (size-- > 0) {
-                Integer poll = queue.poll();
+                Pair<Integer, Integer> poll = queue.poll();
                 assert poll != null;
-                Set<Pair<Integer, Integer>> set = map.getOrDefault(poll, new HashSet<>());
+                Set<Pair<Integer, Integer>> set = map.getOrDefault(poll.getKey(), new HashSet<>());
                 for (Pair<Integer, Integer> pair : set) {
                     int x = pair.getKey(), y = pair.getValue();
-                    if (x == dst) min = Math.min(min, cost.get(poll) + y);
-                    else queue.offer(x);
-                    cost.put(x, cost.get(poll) + y);
+                    if (visited.containsKey(x) && visited.get(x) <= poll.getValue() + y) continue;
+                    if (x == dst) min = Math.min(min, poll.getValue() + y);
+                    else {
+                        pair = new Pair<>(x, poll.getValue() + y);
+                        queue.offer(pair);
+                        visited.put(pair.getKey(), pair.getValue());
+                    }
                 }
             }
             k--;
