@@ -10,41 +10,55 @@ public class Demo01 {
 
     @Test
     public void test() {
-        System.out.println(findLadders("hit", "cog",
-                new ArrayList<>(Arrays.asList("hot", "dot", "dog", "lot", "log", "cog"))));
+        System.out.println(findLadders("hot", "aaa", new ArrayList<>(Arrays.asList("hot", "dog", "dot"))));
+        System.out.println(findLadders("a", "c", new ArrayList<>(Arrays.asList("a", "b", "c"))));
 
     }
 
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
         List<List<Pair<String, String>>> list = new ArrayList<>();
         LinkedList<String> queue = new LinkedList<>();
-        List<String> visited = new ArrayList<>();
+        Set<String> visited = new HashSet<>();
         queue.add(beginWord);
+        visited.add(beginWord);
         int step = 0;
         while (!queue.isEmpty()) {
             int size = queue.size();
+            Set<String> sub = new HashSet<>();
+            boolean flag = false;
             while (size-- > 0) {
                 String poll = queue.poll();
                 assert poll != null;
-                if (poll.equals(endWord)) {
-                    continue;
-                }
                 for (String word : wordList) {
-                    int t = 0;
-                    for (int j = 0; j < poll.length(); j++) if (poll.charAt(j) == word.charAt(j)) t++;
-                    if (t == poll.length() - 1 && !visited.contains(word)) {
+                    if (!visited.contains(word) && check(poll, word)) {
                         queue.offer(word);
                         if (list.size() <= step) list.add(new ArrayList<>());
-                        list.get(step).add(new Pair<>(poll, word));
-                        visited.add(word);
+                        List<Pair<String, String>> pairs = list.get(step);
+                        Pair<String, String> pair = new Pair<>(poll, word);
+                        if (!pairs.contains(pair)) pairs.add(pair);
+                        sub.add(word);
+                        if (word.equals(endWord)) flag = true;
                     }
                 }
             }
+            if (flag) break;
+            visited.addAll(sub);
             step++;
         }
         List<List<String>> ans = new ArrayList<>();
+        if (list.size() == 0 || list.get(list.size() - 1).stream().noneMatch(s -> s.getValue().equals(endWord)))
+            return ans;
         dfs(list, ans, new ArrayList<>(), list.size() - 1, endWord);
         return ans;
+    }
+
+    private boolean check(String a, String b) {
+        int count = 0;
+        for (int i = 0; i < a.length(); i++) {
+            if (count > 1) break;
+            if (a.charAt(i) != b.charAt(i)) count++;
+        }
+        return count == 1;
     }
 
     private void dfs(List<List<Pair<String, String>>> list, List<List<String>> ans, List<String> cur, int level, String s) {
@@ -57,7 +71,7 @@ public class Demo01 {
         List<Pair<String, String>> pairs = list.get(level);
         for (Pair<String, String> pair : pairs) {
             if (Objects.equals(pair.getValue(), s)) {
-                dfs(list, ans, cur, level - 1, pair.getKey());
+                dfs(list, ans, new ArrayList<>(cur), level - 1, pair.getKey());
             }
         }
     }
