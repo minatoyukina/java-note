@@ -2,8 +2,7 @@ package leetcode._201__250._212;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Demo01 {
 
@@ -16,7 +15,10 @@ public class Demo01 {
 
     }
 
-    private List<String> findWords(char[][] board, String[] words) {
+    public List<String> findWords(char[][] board, String[] words) {
+        Set<Integer> set = new HashSet<>();
+        for (char[] chars : board) for (char c : chars) set.add((int) c);
+        words = Arrays.stream(words).filter(s -> s.chars().anyMatch(set::contains)).toArray(String[]::new);
         List<String> list = new ArrayList<>();
         label:
         for (String word : words) {
