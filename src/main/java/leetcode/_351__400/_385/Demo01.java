@@ -2,10 +2,8 @@ package leetcode._351__400._385;
 
 import org.junit.Test;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Stack;
 
 public class Demo01 {
 
@@ -13,54 +11,69 @@ public class Demo01 {
     @Test
     public void test() {
         System.out.println(deserialize("[123,[456,[789]]]"));
+
     }
 
     public NestedInteger deserialize(String s) {
-        Map<Integer, Integer> map = new HashMap<>();
-        Stack<Integer> stack = new Stack<>();
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (c == '[') stack.add(i);
-            if (c == ']') map.put(stack.pop(), i);
-        }
-        return dfs(s, map, 0, s.length() - 1);
-    }
-
-    private NestedInteger dfs(String s, Map<Integer, Integer> map, int left, int right) {
-        for (int i = left; i <= right; i++) {
-            char c = s.charAt(i);
-            if (c == '[') {
-                Integer integer = map.get(i);
-                dfs(s, map, i, integer);
+        if (s.length() == 0) return new NestedInteger();
+        if (s.charAt(0) != '[') return new NestedInteger(Integer.parseInt(s));
+        if (s.length() == 2) return new NestedInteger();
+        NestedInteger ni = new NestedInteger();
+        for (int start = 1, i = 1, count = 0; i < s.length(); i++) {
+            if (count == 0 && (s.charAt(i) == ',' || s.length() - 1 == i)) {
+                ni.add(deserialize(s.substring(start, i)));
+                start = i + 1;
+            } else if (s.charAt(i) == '[') {
+                count++;
+            } else if (s.charAt(i) == ']') {
+                count--;
             }
         }
-        return new NestedInteger(Integer.parseInt(s));
+        return ni;
     }
+
 
     @SuppressWarnings("all")
     static class NestedInteger {
 
-        NestedInteger(int value) {
+        int value;
+        List<NestedInteger> list = new ArrayList<>();
 
+        NestedInteger() {
+
+        }
+
+        NestedInteger(int value) {
+            this.value = value;
         }
 
         boolean isInteger() {
-            return false;
+            return list == null || list.isEmpty();
         }
 
         Integer getInteger() {
-            return 0;
+            return value;
         }
 
         void setInteger(int value) {
+            this.value = value;
         }
 
         void add(NestedInteger ni) {
+            list.add(ni);
         }
 
 
-        List<leetcode._301__350._341.NestedInteger> getList() {
-            return null;
+        List<NestedInteger> getList() {
+            return list;
+        }
+
+        @Override
+        public String toString() {
+            return "NestedInteger{" +
+                    "value=" + value +
+                    ", list=" + list +
+                    '}';
         }
     }
 
