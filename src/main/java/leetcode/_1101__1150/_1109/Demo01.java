@@ -16,7 +16,7 @@ public class Demo01 {
         int[] ans = new int[n];
         int[] diff = new int[n + 1];
         for (int[] booking : bookings) {
-            diff[booking[0]-1] += booking[2];
+            diff[booking[0] - 1] += booking[2];
             diff[booking[1]] -= booking[2];
         }
         for (int i = 0; i < ans.length; i++) {
