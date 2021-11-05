@@ -28,7 +28,7 @@ public class Demo01 {
             str = str.substring(0, i) + str.substring(j + 2);
         }
         return Arrays.stream(str.split("\n"))
-                .map(s -> s.substring(0, s.contains("//") ? s.indexOf("//") : s.length()))
+                .map(s -> s.contains("//") ? s.substring(0, s.indexOf("//")) : s)
                 .filter(s -> !s.isEmpty()).collect(Collectors.toList());
     }
 
