@@ -36,7 +36,7 @@ public class Demo01 {
                 if (count == 1) tree.remove(ori);
                 else tree.put(ori, count - 1);
             }
-            tree.put(timestamp, tree.getOrDefault(timestamp, 0) + 1);
+            tree.put(price, tree.getOrDefault(price, 0) + 1);
             map.put(timestamp, price);
             now = Math.max(now, timestamp);
         }
@@ -46,11 +46,11 @@ public class Demo01 {
         }
 
         public int maximum() {
-            return map.get(tree.lastKey());
+            return tree.lastKey();
         }
 
         public int minimum() {
-            return map.get(tree.firstKey());
+            return tree.firstKey();
         }
     }
 
