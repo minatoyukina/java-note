@@ -75,6 +75,11 @@ final public class Common {
                 .collect(Collectors.toList())).collect(Collectors.toList());
     }
 
+    public static int[][] strToArray(String s) {
+        return strToList(s).stream()
+                .map(x -> x.stream().map(Integer::parseInt).mapToInt(Integer::intValue).toArray()).toArray(int[][]::new);
+    }
+
 
     @Test
     public void test() {
