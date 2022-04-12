@@ -6,7 +6,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 public class ParseJunit {
-    public void parseMethod(Class clazz) throws Exception {
+    public void parseMethod(Class<?> clazz) throws Exception {
         Object obj = clazz.newInstance();
         Method[] methods = clazz.getDeclaredMethods();
 

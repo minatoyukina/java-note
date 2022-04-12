@@ -11,11 +11,11 @@ public class MyJunitTest {
         System.out.println("after :在所有测试方法执行后执行这个方法");
     }
 
-    @Test
+    @MyTest
     public void testUpdate(){
         System.out.println("test :testUpdate()");
     }
-    @Test
+    @MyTest
     public void testAdd(){
         System.out.println("test :testAdd()");
     }

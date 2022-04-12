@@ -21,8 +21,7 @@ public class Demo01 {
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                 .entrySet().stream()
                 .sorted((x, y) -> (int) (y.getValue() - x.getValue()))
-                .map(t -> LongStream.range(0, t.getValue()).mapToObj(i -> String.valueOf(t.getKey())))
-                .flatMap(Function.identity())
+                .flatMap(t -> LongStream.range(0, t.getValue()).mapToObj(i -> String.valueOf(t.getKey())))
                 .reduce((x, y) -> x + y).orElse("");
     }
 
