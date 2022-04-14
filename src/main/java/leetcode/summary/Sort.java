@@ -139,7 +139,7 @@ public class Sort {
     }
 
     private void buildMaxHeap(int[] arr, int len) {
-        for (int i = (int) Math.floor(len / 2); i >= 0; i--) {
+        for (int i = (int) Math.floor(len / 2.0); i >= 0; i--) {
             heapify(arr, i, len);
         }
     }
