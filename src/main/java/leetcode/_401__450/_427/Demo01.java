@@ -27,12 +27,7 @@ public class Demo01 {
         boolean al = n1.isLeaf && n2.isLeaf && n3.isLeaf && n4.isLeaf;
         if (al && s1 && s2 && s3 && s4) return new Node(true, true);
         if (al && !s1 && !s2 && !s3 && !s4) return new Node(false, true);
-        Node n = new Node(false, false);
-        n.topLeft = n1;
-        n.topRight = n2;
-        n.bottomLeft = n3;
-        n.bottomRight = n4;
-        return n;
+        return new Node(false, false, n1, n2, n3, n4);
     }
 
     static class Node {
