@@ -14,6 +14,7 @@ public class Demo01 {
     @Test
     public void test() {
         System.out.println(waysToSplitArray(new int[]{2, 3, 1, 0}));
+
     }
 
     private int waysToSplitArray(int[] nums) {
